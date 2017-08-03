@@ -1,0 +1,20 @@
+{
+  "name": "@articulate/funky",
+  "version": "0.0.0",
+  "description": "Functional helper library",
+  "main": "index.js",
+  "repository": "git@github.com:articulate/funky.git",
+  "author": "articulate",
+  "license": "UNLICENSED",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "joi": "^10.6.0",
+    "ramda": "^0.24.1",
+    "require-dir": "^0.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0"
+  }
+}

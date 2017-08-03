@@ -1,0 +1,3 @@
+# funky
+
+Functional helper library.
