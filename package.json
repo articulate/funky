@@ -7,14 +7,17 @@
   "author": "articulate",
   "license": "UNLICENSED",
   "scripts": {
-    "lint": "eslint ."
+    "build": "buble -i src -o lib",
+    "clean": "rm -rf lib",
+    "lint": "eslint src",
+    "prebuild": "yarn run clean && mkdir -p lib"
   },
   "dependencies": {
     "joi": "^10.6.0",
-    "ramda": "^0.24.1",
-    "require-dir": "^0.3.2"
+    "ramda": "^0.24.1"
   },
   "devDependencies": {
+    "buble": "^0.15.2",
     "eslint": "^4.3.0"
   }
 }

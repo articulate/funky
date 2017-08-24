@@ -1,9 +1,10 @@
-const { apply, curryN } = require('ramda')
+const apply = require('ramda/src/apply')
+const curry = require('ramda/src/curry')
 
 const { slice } = Array.prototype
 
 // backoff : Number -> Number -> (a... -> Promise b) -> a... -> Promise b
-const backoff = curryN(3, (base, tries, f) =>
+const backoff = (base, tries, f) =>
   function() {
     const args = slice.call(arguments)
     let attempt = 0
@@ -23,7 +24,7 @@ const backoff = curryN(3, (base, tries, f) =>
       ++attempt < tries ? retry() : Promise.reject(err)
 
     return retry()
-  })
+  }
 
 const delay = (base, attempt) =>
   attempt && randBetween(0, base * Math.pow(2, attempt))
@@ -31,4 +32,4 @@ const delay = (base, attempt) =>
 const randBetween = (lo, hi) =>
   lo + Math.random() * (hi - lo)
 
-module.exports = backoff
+module.exports = curry(backoff)

@@ -1,4 +1,5 @@
-const { compose, juxt } = require('ramda')
+const compose = require('ramda/src/compose')
+const juxt    = require('ramda/src/juxt')
 
 const all = require('./all')
 
