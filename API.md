@@ -3,7 +3,6 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
-| [`assign`](#assign) | `{ k: v } -> { k: v } -> { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
 | [`convergeP`](#convergep) | `(b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d` |
 | [`copyProp`](#copyprop) | `String -> String -> { k: v } -> { k: v }` |
@@ -31,18 +30,6 @@ See also [`reject`](#reject), [`resolve`](#resolve).
 
 ```js
 all([ Promise.resolve('a') ]) //=> Promise ['a']
-```
-
-### assign
-
-```haskell
-assign : { k: v } -> { k: v } -> { k: v }
-```
-
-Copies the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.  Just a curried version of `Object.assign`.  _**Warning: mutates the target object.**_
-
-```js
-assign({ id: 'abc' }, { author: 'joey' }) //=> { id: 'abc', author: 'joey' }
 ```
 
 ### backoff
