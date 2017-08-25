@@ -102,7 +102,7 @@ juxtP : [a... -> Promise b] -> a... -> Promise [b]
 
 An async version of [`R.juxt`](http://devdocs.io/ramda/index#juxt) that accepts Promise-returning branching functions.
 
-Applies a list of functions to a list of values, and resolves with a list of their resolved values.
+Applies a list of functions to some values, and resolves with a list of their resolved values.
 
 See also [`convergeP`](#convergep).
 
@@ -113,12 +113,12 @@ const deleteCourseAndLessons = juxtP([ deleteCourse, deleteLessons ])
 ### mapP
 
 ```haskell
-mapP : Functor f => (a -> Promise b) -> f a -> Promise f b
+mapP : (a -> Promise b) -> [a] -> Promise [b]
 ```
 
 An async version of [`R.map`]() that accepts a Promise-returning function.
 
-Takes a function and a functor, applies the function to each of the functor's values, and returns a functor of the same shape.
+Takes an async function and a list, applies the function to each of the list's values, and resolves with a list of the resolved values.
 
 See also [`evolveP`](#evolvep).
 

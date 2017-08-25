@@ -14,8 +14,8 @@ const backoff = (base, tries, f) =>
         setTimeout(() => {
           Promise.resolve(args)
             .then(apply(f))
-            .then(resolve)
             .catch(tryAgain)
+            .then(resolve)
             .catch(reject)
         }, delay(base, attempt))
       })

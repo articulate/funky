@@ -15,7 +15,7 @@ const evolveP = (transforms, obj) => {
     xfrm = type === 'function'
       ? xfrm
       : xfrm && type === 'object'
-        ? evolveP(xfrm)
+        ? _evolveP(xfrm)
         : identity
 
     return Promise.resolve(val)
@@ -28,4 +28,4 @@ const evolveP = (transforms, obj) => {
     .then(fromPairs)
 }
 
-module.exports = curry(evolveP)
+const _evolveP = module.exports = curry(evolveP)

@@ -10,7 +10,9 @@
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib",
     "lint": "eslint src",
-    "prebuild": "yarn run clean && mkdir -p lib"
+    "prebuild": "yarn run clean && mkdir -p lib",
+    "pretest": "yarn run build",
+    "test": "mocha --reporter dot"
   },
   "dependencies": {
     "joi": "^10.6.0",
@@ -18,6 +20,9 @@
   },
   "devDependencies": {
     "buble": "^0.15.2",
-    "eslint": "^4.3.0"
+    "chai": "^4.1.1",
+    "eslint": "^4.3.0",
+    "mocha": "^3.5.0",
+    "prop-factory": "^1.0.0"
   }
 }
