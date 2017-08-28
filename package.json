@@ -8,10 +8,12 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "buble -i src -o lib",
-    "clean": "rm -rf lib",
+    "clean": "rm -rf lib && mkdir -p lib",
     "lint": "eslint src test",
-    "prebuild": "yarn run clean && mkdir -p lib",
+    "postversion": "git push --tags origin master",
+    "prebuild": "yarn run clean",
     "pretest": "yarn run build",
+    "preversion": "git checkout master && yarn run build",
     "test": "mocha --reporter dot"
   },
   "dependencies": {
