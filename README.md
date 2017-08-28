@@ -1,4 +1,4 @@
-# @articulate/funky
+# @articulate/funky [![Build Status](https://travis-ci.com/articulate/funky.svg?token=7jjK4qBy1H9dWQMCrubF&branch=master)](https://travis-ci.com/articulate/funky)
 
 Functional helper library.
 
