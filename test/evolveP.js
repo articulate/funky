@@ -10,10 +10,10 @@ describe('evolveP', () => {
   const res = property()
 
   beforeEach(() =>
-    evolutions({ foo: 1, bar: { baz: 1 } }).then(res)
+    evolutions({ foo: 1, bar: { baz: 1 }, bat: 1 }).then(res)
   )
 
   it('recursively evolves an async shallow copy (??) of an object', () =>
-    expect(res()).to.eql({ foo: 3, bar: { baz: 3 } })
+    expect(res()).to.eql({ foo: 3, bar: { baz: 3 }, bat: 1 })
   )
 })
