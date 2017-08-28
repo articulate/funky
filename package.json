@@ -6,6 +6,13 @@
   "repository": "git@github.com:articulate/funky.git",
   "author": "articulate",
   "license": "UNLICENSED",
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100
+  },
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib && mkdir -p lib",
@@ -14,7 +21,9 @@
     "prebuild": "yarn run clean",
     "pretest": "yarn run build",
     "preversion": "git checkout master && yarn run build",
-    "test": "mocha --reporter dot"
+    "test": "yarn run lint && yarn run test:coverage",
+    "test:coverage": "nyc mocha test --reporter=dot",
+    "coverage": "nyc report --reporter=text-lcov"
   },
   "dependencies": {
     "joi": "^10.6.0",
@@ -25,6 +34,7 @@
     "chai": "^4.1.1",
     "eslint": "^4.3.0",
     "mocha": "^3.5.0",
+    "nyc": "^11.1.0",
     "prop-factory": "^1.0.0"
   }
 }
