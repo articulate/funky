@@ -9,12 +9,12 @@
 | [`evolveP`](#evolvep) | `{ k: (v -> Promise v) } -> { k: v } -> Promise { k: v }` |
 | [`juxtP`](#juxtp) | `[a... -> Promise b] -> a... -> Promise [b]` |
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
+| [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
-| [`swap`](#swap) | `Number -> Number -> [a] -> [a]` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`validate`](#validate) | `Schema -> a -> Promise a` |
 
@@ -126,6 +126,18 @@ See also [`evolveP`](#evolvep).
 mapP(getProfile, ['abc','def']) //=> Promise [{ name: 'joey' }, { name: 'fella' }]
 ```
 
+### move
+
+```haskell
+move : Number -> Number -> [a] -> [a]
+```
+
+Moves a list item from one position to another.
+
+```js
+move(3, 1, ['a','b','c','d']) //=> ['a','d','b','c']
+```
+
 ### normalizeBy
 
 ```haskell
@@ -191,18 +203,6 @@ See also [`all`](#all), [`reject`](#reject).
 
 ```js
 resolve('a') //=> Promise 'a'
-```
-
-### swap
-
-```haskell
-swap : Number -> Number -> [a] -> [a]
-```
-
-Moves a list item from one position to another.
-
-```js
-swap(3, 1, ['a','b','c','d']) //=> ['a','d','b','c']
 ```
 
 ### tapP

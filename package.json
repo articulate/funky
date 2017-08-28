@@ -9,7 +9,7 @@
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib",
-    "lint": "eslint src",
+    "lint": "eslint src test",
     "prebuild": "yarn run clean && mkdir -p lib",
     "pretest": "yarn run build",
     "test": "mocha --reporter dot"

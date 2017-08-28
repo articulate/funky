@@ -15,5 +15,5 @@ describe('convergeP', () => {
 
   it('branches and converges with async functions', function () {
     expect(res()).to.equal(6)
-  });
+  })
 })
