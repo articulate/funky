@@ -1,4 +1,4 @@
 *.log
 .DS_Store
-lib
-node_modules
+/lib
+/node_modules
