@@ -22,7 +22,8 @@
     "prebuild": "yarn run clean",
     "pretest": "yarn run build",
     "preversion": "git checkout master && yarn run build",
-    "test": "yarn run lint && yarn run test:coverage",
+    "test": "mocha test --reporter=dot",
+    "test:ci": "yarn run lint && yarn run test:coverage",
     "test:coverage": "nyc mocha test --reporter=dot"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "ramda": "^0.24.1"
   },
   "devDependencies": {
+    "@articulate/spy": "^0.0.1",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
     "eslint": "^4.3.0",

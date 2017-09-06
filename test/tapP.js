@@ -1,8 +1,8 @@
 const { expect } = require('chai')
 const property   = require('prop-factory')
+const spy        = require('@articulate/spy')
 
 const { add }  = require('./lib/async')
-const spy      = require('./lib/spy')
 const { tapP } = require('..')
 
 describe('tapP', () => {
@@ -20,7 +20,7 @@ describe('tapP', () => {
   )
 
   it('runs the function with the supplied value', () =>
-    expect(func.calls).to.eql([ 4 ])
+    expect(func.calls[0]).to.eql([4])
   )
 
   it('resolves with the original value', () =>
