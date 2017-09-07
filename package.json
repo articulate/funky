@@ -16,16 +16,16 @@
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib && mkdir -p lib",
-    "coverage": "nyc report --reporter=text-lcov",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src test",
     "postversion": "git push --tags origin master",
-    "prebuild": "yarn run clean",
-    "pretest": "yarn run build",
-    "pretest:coverage": "yarn run build",
-    "preversion": "git checkout master && yarn run build",
+    "prebuild": "yarn clean",
+    "pretest": "yarn build",
+    "pretest:coverage": "yarn build",
+    "preversion": "git checkout master && yarn build",
     "test": "mocha test --reporter=dot",
-    "test:ci": "yarn run lint && yarn run test:coverage",
-    "test:coverage": "nyc mocha test --reporter=dot"
+    "test:ci": "yarn lint && yarn test:coverage && yarn coverage",
+    "test:coverage": "nyc yarn test"
   },
   "dependencies": {
     "joi": "^10.6.0",
@@ -35,6 +35,7 @@
     "@articulate/spy": "^0.0.1",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
+    "coveralls": "^2.13.1",
     "eslint": "^4.3.0",
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
