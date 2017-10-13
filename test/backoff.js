@@ -20,7 +20,7 @@ describe('backoff', () => {
 
   describe('when function succeeds', () => {
     beforeEach(() =>
-      sureThing().then(res)
+      sureThing('a').then(res)
     )
 
     it('only runs once', () =>
@@ -30,7 +30,7 @@ describe('backoff', () => {
 
   describe('when function fails a little', () => {
     beforeEach(() =>
-      failsThrice().then(res)
+      failsThrice('a').then(res)
     )
 
     it('retries until success', () =>
@@ -40,7 +40,7 @@ describe('backoff', () => {
 
   describe('when functions fails a lot', () => {
     beforeEach(() =>
-      badDay().catch(res)
+      badDay('a').catch(res)
     )
 
     it('retries the max number of times before rejecting', () =>

@@ -1,5 +1,6 @@
 *.log
 .DS_Store
+.yarn*
 /lib
 /node_modules
 /.nyc_output

@@ -1,12 +1,9 @@
 const apply = require('ramda/src/apply')
 const curry = require('ramda/src/curry')
 
-const { slice } = Array.prototype
-
 // backoff : Number -> Number -> (a... -> Promise b) -> a... -> Promise b
 const backoff = (base, tries, f) =>
-  function() {
-    const args = slice.call(arguments)
+  (...args) => {
     let attempt = 0
 
     const retry = () =>
