@@ -19,13 +19,13 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src test",
     "postversion": "git push --tags origin master",
-    "prebuild": "yarn clean",
-    "pretest": "yarn build",
-    "pretest:coverage": "yarn build",
-    "preversion": "git checkout master && yarn build",
+    "prebuild": "yarn run clean",
+    "pretest": "yarn run build",
+    "pretest:coverage": "yarn run build",
+    "preversion": "git checkout master && yarn run build",
     "test": "mocha test --reporter=dot",
-    "test:ci": "yarn lint && yarn test:coverage && yarn coverage",
-    "test:coverage": "nyc yarn test"
+    "test:ci": "yarn run lint && yarn run test:coverage && yarn run coverage",
+    "test:coverage": "nyc yarn run test"
   },
   "dependencies": {
     "joi": "^10.6.0",
