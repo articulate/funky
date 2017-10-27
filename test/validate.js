@@ -8,8 +8,9 @@ const schema = Joi.object({
   foo: Joi.string().required()
 })
 
-const good = { foo: 'bar' }
-const bad  = { foo: 12345 }
+const good  = { foo: 'bar' }
+const bad   = { foo: 12345 }
+const extra = { foo: 'bar', bar: '123' }
 
 describe('validate', () => {
   const res = property()
@@ -33,5 +34,15 @@ describe('validate', () => {
       expect(res()).to.be.a('Error')
       expect(res().isJoi).to.be.true
     })
+  })
+
+  describe('with custom options', () => {
+    beforeEach(() =>
+      validate(schema, extra, { stripUnknown: true }).then(res)
+    )
+
+    it('respects those options', () =>
+      expect(res()).to.eql({ foo: 'bar' })
+    )
   })
 })

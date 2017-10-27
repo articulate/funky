@@ -1,10 +1,14 @@
-const curry = require('ramda/src/curry')
-const flip  = require('ramda/src/flip')
-const Joi   = require('joi')
+const curryN = require('ramda/src/curryN')
+const Joi    = require('joi')
 
 const promisify = require('./promisify')
 
-// validate : Schema -> a -> Promise a
-const validate = flip(promisify(Joi.validate, Joi))
+const defaults = { abortEarly: false }
 
-module.exports = curry(validate)
+const _validate = promisify(Joi.validate, Joi)
+
+// validate : Schema -> a -> Promise a
+const validate = (schema, x, opts=defaults) =>
+  _validate(x, schema, opts)
+
+module.exports = curryN(2, validate)
