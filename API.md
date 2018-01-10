@@ -4,6 +4,12 @@
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
+| [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v }` |
+| [`combineAll`](#combineall) | `[a... -> { k: v }] -> { k: v } -> { k: v }` |
+| [`combineAllP`](#combineallp) | `[a... -> Promise { k: v }] -> { k: v } -> Promise { k: v }` |
+| [`combineP`](#combinep) | `({ k: v } -> Promise { k: v }) -> Promise { k: v }` |
+| [`combineWith`](#combinewith) | `(c -> b -> d) (a -> b) -> c -> d` |
+| [`combineWithP`](#combinewithp) | `(c -> b -> d) (a -> Promise b) -> Promise c -> Promise d` |
 | [`convergeP`](#convergep) | `(b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d` |
 | [`copyProp`](#copyprop) | `String -> String -> { k: v } -> { k: v }` |
 | [`evolveP`](#evolvep) | `{ k: (v -> Promise v) } -> { k: v } -> Promise { k: v }` |
@@ -45,6 +51,74 @@ Accepts a `base` delay in ms and max `tries`, and then wraps an async function w
 const fetchImage = opts => { /* async, and might fail sometimes */ }
 
 backoff(250, 5, fetchImage) //=> a new function that tries at most 5 times before rejecting
+```
+
+### combine
+
+```haskell
+combine : ({ k: v } -> { k: v }) -> { k: v }
+```
+
+Accepts a function & an object. Merges the results of the function into the object.
+
+```js
+combine(always({ foo: 1 }), { foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
+```
+
+### combineAll
+
+```haskell
+combineAll : combineAll : [a... -> { k: v }] -> { k: v } -> { k: v }
+```
+
+Accepts a list of functions & an object. Merges the results of all the functions into the object left-to-right
+
+```js
+combineAll([ always({ foo: 1, bar: 2 }), always({ bar: 3 }) ], { foo: 4, baz: 5 }) //=> { foo: 1, bar: 3, baz: 5 }
+```
+
+### combineP
+
+```haskell
+combineP : ({ k: v } -> Promise { k: v }) -> Promise { k: v }
+```
+
+Async version of [`combine`](#combine)
+
+Accepts an async function & an object. Merges the results of the function into the object.
+
+```js
+combineP(always(resolve({ foo: 1 })), { foo: 2, bar: 3 }) //=> Promise { foo: 1, baz: 3 }
+```
+
+### combineWith
+
+```haskell
+combineWith : (c -> b -> d) (a -> b) -> c -> d
+```
+
+Accepts a merging function, a transformation function, and an value. Uses the merging function to merge the results of the transformation function into the value.
+
+```js
+combineWith(multiply, add(2), 3) //=> 15
+combineWith(mergeDeepLeft, always({ foo: { bar: 1, bip: 2 } }), { foo: { bar: 3, baz: 4 } })
+  //=> { foo: { bar: 3, baz: 4, bip: 2 } }
+```
+
+### combineWithP
+
+```haskell
+combineWithP : (c -> b -> d) (a -> Promise b) -> Promise c -> Promise d
+```
+
+Async version of [`combineWith`](#combinewith).
+
+Accepts a merging function, an async transformation function, and an value. Uses the merging function to merge the results of the transformation function into the value.
+
+```js
+combineWith(multiply, compose(resolve, add(2)), 3) //=> Promise 15
+combineWith(mergeDeepLeft, always(resolve({ foo: { bar: 1, bip: 2 } })), { foo: { bar: 3, baz: 4 } })
+  //=> Promise { foo: { bar: 3, baz: 4, bip: 2 } }
 ```
 
 ### convergeP
