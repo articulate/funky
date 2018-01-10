@@ -11,6 +11,7 @@
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
+| [`overP`](#overp) | `Lens s => (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
@@ -148,6 +149,23 @@ normalizeBy : String -> [{ k: v }] -> { v: { k: v } }
 
 ```js
 normalizeBy('uid', [{ uid: 'abc' }, { uid: 'def' }]) //=> { abc: { uid: 'abc' }, def: { uid: 'def' }}
+```
+
+
+### overP
+
+```haskell
+overP : Lens s -> (a -> Promise b) -> s a -> Promise s b
+```
+
+An async version of [`R.over`](http://ramdajs.com/docs/#over) that accepts a Promise-returning function.
+
+Returns the result of "setting" the portion of the given data structure focused by the given lens to the result of applying the given async function to the focused value.
+
+```js
+var headLens = lensIndex(0)
+var asyncToUpper = compose(resolve, toUpper)
+overP(headLens, asyncToUpper, ['foo', 'bar', 'baz']) //=> Promise ['FOO', 'bar', 'baz']
 ```
 
 ### promisify
