@@ -4,10 +4,10 @@
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
-| [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v }` |
-| [`combineAll`](#combineall) | `[a... -> { k: v }] -> { k: v } -> { k: v }` |
-| [`combineAllP`](#combineallp) | `[a... -> Promise { k: v }] -> { k: v } -> Promise { k: v }` |
-| [`combineP`](#combinep) | `({ k: v } -> Promise { k: v }) -> Promise { k: v }` |
+| [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
+| [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
+| [`combineAllP`](#combineallp) | `[({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }` |
+| [`combineP`](#combinep) | `({ k: v } -> Promise { k: v }) -> { k: v } -> Promise { k: v }` |
 | [`combineWith`](#combinewith) | `(c -> b -> d) (a -> b) -> c -> d` |
 | [`combineWithP`](#combinewithp) | `(c -> b -> d) (a -> Promise b) -> Promise c -> Promise d` |
 | [`convergeP`](#convergep) | `(b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d` |
