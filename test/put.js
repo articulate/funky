@@ -1,15 +1,15 @@
 const { expect } = require('chai')
 
-const { put } = require('..')
+const { setProp } = require('..')
 
-describe('put', () => {
+describe('setProp', () => {
   it('sets a value in a specific property of an object', () =>
-    expect(put('foo', {}, 'bar'))
+    expect(setProp('foo', {}, 'bar'))
       .to.eql({ foo: 'bar' })
   )
 
   it('overwrites a value in a specific property of an object', () =>
-    expect(put('foo', { foo: 'bar' }, 'baz'))
+    expect(setProp('foo', { foo: 'bar' }, 'baz'))
       .to.eql({ foo: 'baz' })
   )
 })

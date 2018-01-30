@@ -21,7 +21,7 @@
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
 | [`overP`](#overp) | `Lens s => (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
-| [`put`](#put) | `String -> { k: v } -> a -> { k: v }` |
+| [`setProp`](#setProp) | `String -> { k: v } -> a -> { k: v }` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
@@ -281,16 +281,16 @@ Takes a function which accepts a node-style callback and returns a new function 
 const upload = promisify(s3.upload, s3)
 ```
 
-### put
+### setProp
 
 ```haskell
-put : String -> { k: v } -> a -> { k: v }
+setProp : String -> { k: v } -> a -> { k: v }
 ```
 
 Accepts a key, object and any value.  Sets the property `key` on the object to `value`.
 
 ```js
-put('foo', {}, 'bar') //=> { foo: 'bar' }
+setProp('foo', {}, 'bar') //=> { foo: 'bar' }
 ```
 
 ### reject
