@@ -47,7 +47,7 @@ all([ Promise.resolve('a') ]) //=> Promise ['a']
 // assocWith : String -> ({ k: v } -> a) -> { k: v }
 ```
 
-Accepts three (3) parameters: a property, a function and an object.  Sets the property on the object to the result of the function.
+Accepts three (3) arguments: a property, a function and an object.  Sets the property on the object to the result of the function.
 
 ```js
 assocWith('foo', {}, always('bar')) //=> { foo: 'bar' }
@@ -59,7 +59,7 @@ assocWith('foo', {}, always('bar')) //=> { foo: 'bar' }
 // assocWithP : String -> ({ k: v } -> Promise a) -> { k: v }
 ```
 
-Accepts three (3) parameters: a property, a promise-returning function and an object.  Sets the property on the object to the result of the function when it resolves.
+Accepts three (3) arguments: a property, a promise-returning function and an object.  Sets the property on the object to the result of the function when it resolves.
 
 ```js
 assocWithP('foo', {}, always(Promise.resolve('bar'))) //=> Promise { foo: 'bar' }
