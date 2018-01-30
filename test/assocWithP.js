@@ -2,11 +2,11 @@ const { expect } = require('chai')
 const property   = require('prop-factory')
 const always     = require('ramda/src/always')
 
-const { assignP } = require('..')
+const { assocWithP } = require('..')
 
-const assigner = assignP('foo', always(Promise.resolve('bar')))
+const assigner = assocWithP('foo', always(Promise.resolve('bar')))
 
-describe('assignP', () => {
+describe('assocWithP', () => {
   const res = property()
 
   beforeEach(() =>

@@ -4,7 +4,7 @@
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
 | [`assign`](#assign) | `String -> ({ k: v } -> a) -> { k: v }` |
-| [`assignP`](#assignP) | `String -> ({ k: v } -> Promise a) -> Promise { k: v }` |
+| [`assocWithP`](#assocWithP) | `String -> ({ k: v } -> Promise a) -> Promise { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
 | [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
 | [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
@@ -53,16 +53,16 @@ Accepts a property, function and object.  Sets the property on the object to the
 assign('foo', {}, always('bar')) //=> { foo: 'bar' }
 ```
 
-### assignP
+### assocWithP
 
 ```haskell
-// assignP : String -> ({ k: v } -> Promise a) -> { k: v }
+// assocWithP : String -> ({ k: v } -> Promise a) -> { k: v }
 ```
 
 Accepts a property, promise returning function and object.  Sets the property on the object to the result of the function when it resolves.
 
 ```js
-assignP('foo', {}, always(Promise.resolve('bar'))) //=> Promise { foo: 'bar' }
+assocWithP('foo', {}, always(Promise.resolve('bar'))) //=> Promise { foo: 'bar' }
 ```
 
 ### backoff

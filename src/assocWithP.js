@@ -3,8 +3,8 @@ const curry     = require('ramda/src/curry')
 const identity  = require('ramda/src/identity')
 const convergeP = require('./convergeP')
 
-// assignP : String -> ({ k: v } -> Promise a) -> Promise { k: v }
-const assignP = (key, fn) =>
+// assocWithP : String -> ({ k: v } -> Promise a) -> Promise { k: v }
+const assocWithP = (key, fn) =>
   convergeP(assoc(key), [fn, identity])
 
-module.exports = curry(assignP)
+module.exports = curry(assocWithP)
