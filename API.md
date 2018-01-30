@@ -3,6 +3,8 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
+| [`assocWith`](#assocWith) | `String -> ({ k: v } -> a) -> { k: v } -> { k: v }` |
+| [`assocWithP`](#assocWithP) | `String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
 | [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
 | [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
@@ -37,6 +39,30 @@ See also [`reject`](#reject), [`resolve`](#resolve).
 
 ```js
 all([ Promise.resolve('a') ]) //=> Promise ['a']
+```
+
+### assocWith
+
+```haskell
+assocWith : String -> ({ k: v } -> a) -> { k: v } -> { k: v }
+```
+
+Accepts three (3) arguments: a property, a function and an object.  Sets the property on the object to the result of the function.
+
+```js
+assocWith('foo', always('bar'), {}) //=> { foo: 'bar' }
+```
+
+### assocWithP
+
+```haskell
+assocWithP : String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }
+```
+
+Accepts three (3) arguments: a property, a promise-returning function and an object.  Sets the property on the object to the result of the function when it resolves.
+
+```js
+assocWithP('foo', always(Promise.resolve('bar'), {})) //=> Promise { foo: 'bar' }
 ```
 
 ### backoff
