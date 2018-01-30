@@ -3,7 +3,7 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
-| [`assign`](#assign) | `String -> ({ k: v } -> a) -> { k: v }` |
+| [`assocWith`](#assocWith) | `String -> ({ k: v } -> a) -> { k: v }` |
 | [`assocWithP`](#assocWithP) | `String -> ({ k: v } -> Promise a) -> Promise { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
 | [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
@@ -41,16 +41,16 @@ See also [`reject`](#reject), [`resolve`](#resolve).
 all([ Promise.resolve('a') ]) //=> Promise ['a']
 ```
 
-### assign
+### assocWith
 
 ```haskell
-// assign : String -> ({ k: v } -> a) -> { k: v }
+// assocWith : String -> ({ k: v } -> a) -> { k: v }
 ```
 
 Accepts a property, function and object.  Sets the property on the object to the result of the function.
 
 ```js
-assign('foo', {}, always('bar')) //=> { foo: 'bar' }
+assocWith('foo', {}, always('bar')) //=> { foo: 'bar' }
 ```
 
 ### assocWithP

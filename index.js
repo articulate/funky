@@ -1,5 +1,5 @@
 exports.all          = require('./lib/all')
-exports.assign       = require('./lib/assign')
+exports.assocWith    = require('./lib/assocWith')
 exports.assocWithP   = require('./lib/assocWithP')
 exports.backoff      = require('./lib/backoff')
 exports.combine      = require('./lib/combine')
