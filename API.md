@@ -3,6 +3,7 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
+| [`assign`](#assign) | `String -> ({ k: v } -> a) -> { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
 | [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
 | [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
@@ -38,6 +39,18 @@ See also [`reject`](#reject), [`resolve`](#resolve).
 
 ```js
 all([ Promise.resolve('a') ]) //=> Promise ['a']
+```
+
+### assign
+
+```haskell
+// assign : String -> ({ k: v } -> a) -> { k: v }
+```
+
+Accepts a property, function and object.  Sets the property on the object to the result of the function.
+
+```js
+assign('foo', {}, always('bar')) //=> { foo: 'bar' }
 ```
 
 ### backoff
