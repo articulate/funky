@@ -1,10 +1,10 @@
 const assoc     = require('ramda/src/assoc')
 const curry     = require('ramda/src/curry')
-const identity  = require('ramda/src/identity')
-const convergeP = require('./convergeP')
+const lensProp  = require('ramda/src/lensProp')
+const overP     = require('./overP')
 
 // assocWithP : String -> ({ k: v } -> Promise a) -> Promise { k: v }
 const assocWithP = (key, fn) =>
-  convergeP(assoc(key), [fn, identity])
+  overP(lensProp(key), fn)
 
 module.exports = curry(assocWithP)
