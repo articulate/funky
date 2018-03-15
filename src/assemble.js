@@ -1,6 +1,5 @@
-const curry  = require('ramda/src/curry')
-const map    = require('ramda/src/map')
-const thrush = require('ramda/src/applyTo')
+const curry = require('ramda/src/curry')
+const map   = require('ramda/src/map')
 
 // assemble :: { k: (v -> v) } -> v -> { k: v }
 const assemble = (xfrms, x) => {
