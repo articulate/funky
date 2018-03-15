@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "joi": "^10.6.0",
-    "ramda": "^0.24.1"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
