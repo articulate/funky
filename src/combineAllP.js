@@ -4,6 +4,6 @@ const mergeAll = require('ramda/src/mergeAll')
 
 const juxtP    = require('./juxtP')
 
-// combineAllP : [({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }
+// combineAllP :: [({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }
 module.exports = fns =>
   composeP(mergeAll, juxtP([ identity, ...fns ]))

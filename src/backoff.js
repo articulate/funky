@@ -1,7 +1,7 @@
 const apply = require('ramda/src/apply')
 const curry = require('ramda/src/curry')
 
-// backoff : Number -> Number -> (a... -> Promise b) -> a... -> Promise b
+// backoff :: Number -> Number -> (a... -> Promise b) -> a... -> Promise b
 const backoff = (base, tries, f) =>
   (...args) => {
     let attempt = 0

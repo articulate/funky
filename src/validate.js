@@ -7,7 +7,7 @@ const defaults = { abortEarly: false }
 
 const _validate = promisify(Joi.validate, Joi)
 
-// validate : Schema -> a -> Promise a
+// validate :: Schema -> a -> Promise a
 const validate = (schema, x, opts=defaults) =>
   _validate(x, schema, opts)
 

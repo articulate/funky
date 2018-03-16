@@ -3,6 +3,8 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
+| [`assemble`](#assemble) | `{ k: (v -> v) } -> v -> { k: v }` |
+| [`assembleP`](#assembleP) | `{ k: (v -> Promise v) } -> v -> Promise { k: v }` |
 | [`assocWith`](#assocWith) | `String -> ({ k: v } -> a) -> { k: v } -> { k: v }` |
 | [`assocWithP`](#assocWithP) | `String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }` |
 | [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
@@ -29,8 +31,10 @@
 
 ### all
 
+`@articulate/funky/lib/all`
+
 ```haskell
-all : [Promise a] -> Promise [a]
+all :: [Promise a] -> Promise [a]
 ```
 
 Returns a single `Promise` that resolves when all of the promises in the list have resolved or when the iterable argument contains no promises. It rejects with the reason of the first promise that rejects.  Just a bound version of [`Promise.all`](http://devdocs.io/javascript/global_objects/promise/all).
@@ -41,10 +45,40 @@ See also [`reject`](#reject), [`resolve`](#resolve).
 all([ Promise.resolve('a') ]) //=> Promise ['a']
 ```
 
-### assocWith
+### assemble
+
+`@articulate/funky/lib/assemble`
 
 ```haskell
-assocWith : String -> ({ k: v } -> a) -> { k: v } -> { k: v }
+assemble :: { k: (v -> v) } -> v -> { k: v }
+```
+
+Creates a new object by recursively applying a nested map of transforms to an input value.  Primitive values on the transform map are treated as constant functions.
+
+```js
+assemble({ foo: add(1), bar: { baz: add(2) }, bat: 1 }, 1) //=> { foo: 2, bar: { baz: 3 }, bat: 1 }
+```
+
+### assembleP
+
+`@articulate/funky/lib/assembleP`
+
+```haskell
+assembleP :: { k: (v -> Promise v) } -> v -> Promise { k: v }
+```
+
+Creates a new object by recursively applying a nested map of async transforms to an input value.  Primitive values on the transform map are treated as constant functions.  Waits until all transforms complete before resolving.
+
+```js
+assembleP({ courses: getCourses, profile: getProfile }, userId) //=> Promise { courses: [], profile: {} }
+```
+
+### assocWith
+
+`@articulate/funky/lib/assocWith`
+
+```haskell
+assocWith :: String -> ({ k: v } -> a) -> { k: v } -> { k: v }
 ```
 
 Accepts three (3) arguments: a property, a function and an object.  Sets the property on the object to the result of the function.
@@ -55,8 +89,10 @@ assocWith('foo', always('bar'), {}) //=> { foo: 'bar' }
 
 ### assocWithP
 
+`@articulate/funky/lib/assocWithP`
+
 ```haskell
-assocWithP : String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }
+assocWithP :: String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }
 ```
 
 Accepts three (3) arguments: a property, a promise-returning function and an object.  Sets the property on the object to the result of the function when it resolves.
@@ -67,8 +103,10 @@ assocWithP('foo', always(Promise.resolve('bar'), {})) //=> Promise { foo: 'bar' 
 
 ### backoff
 
+`@articulate/funky/lib/backoff`
+
 ```haskell
-backoff : Number -> Number -> (a... -> Promise b) -> a... -> Promise b
+backoff :: Number -> Number -> (a... -> Promise b) -> a... -> Promise b
 ```
 
 Accepts a `base` delay in ms and max `tries`, and then wraps an async function with a [full jitter exponential backoff](https://www.awsarchitectureblog.com/2015/03/backoff.html) algorithm.  Useful for recovering from intermittent network failures.  Will retry for all caught errors until the number of `tries` is reached.
@@ -81,8 +119,10 @@ backoff(250, 5, fetchImage) //=> a new function that tries at most 5 times befor
 
 ### combine
 
+`@articulate/funky/lib/combine`
+
 ```haskell
-combine : ({ k: v } -> { k: v }) -> { k: v }
+combine :: ({ k: v } -> { k: v }) -> { k: v }
 ```
 
 Accepts a function & an object. Merges the results of the function into the object.
@@ -93,8 +133,10 @@ combine(always({ foo: 1 }), { foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
 
 ### combineAll
 
+`@articulate/funky/lib/combineAll`
+
 ```haskell
-combineAll : combineAll : [a... -> { k: v }] -> { k: v } -> { k: v }
+combineAll :: combineAll : [a... -> { k: v }] -> { k: v } -> { k: v }
 ```
 
 Accepts a list of functions & an object. Merges the results of all the functions into the object left-to-right
@@ -105,8 +147,10 @@ combineAll([ always({ foo: 1, bar: 2 }), always({ bar: 3 }) ], { foo: 4, baz: 5 
 
 ### combineP
 
+`@articulate/funky/lib/combineP`
+
 ```haskell
-combineP : ({ k: v } -> Promise { k: v }) -> Promise { k: v }
+combineP :: ({ k: v } -> Promise { k: v }) -> Promise { k: v }
 ```
 
 Async version of [`combine`](#combine)
@@ -119,8 +163,10 @@ combineP(always(resolve({ foo: 1 })), { foo: 2, bar: 3 }) //=> Promise { foo: 1,
 
 ### combineWith
 
+`@articulate/funky/lib/combineWith`
+
 ```haskell
-combineWith : (c -> b -> d) (a -> b) -> c -> d
+combineWith :: (c -> b -> d) (a -> b) -> c -> d
 ```
 
 Accepts a merging function, a transformation function, and an value. Uses the merging function to merge the results of the transformation function into the value.
@@ -133,8 +179,10 @@ combineWith(mergeDeepLeft, always({ foo: { bar: 1, bip: 2 } }), { foo: { bar: 3,
 
 ### combineWithP
 
+`@articulate/funky/lib/combineWithP`
+
 ```haskell
-combineWithP : (c -> b -> d) (a -> Promise b) -> Promise c -> Promise d
+combineWithP :: (c -> b -> d) (a -> Promise b) -> Promise c -> Promise d
 ```
 
 Async version of [`combineWith`](#combinewith).
@@ -149,8 +197,10 @@ combineWith(mergeDeepLeft, always(resolve({ foo: { bar: 1, bip: 2 } })), { foo: 
 
 ### convergeP
 
+`@articulate/funky/lib/convergeP`
+
 ```haskell
-convergeP : (b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d
+convergeP :: (b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d
 ```
 
 An async version of [`R.converge`](http://devdocs.io/ramda/index#converge) that accepts Promise-returning branching and converging functions.
@@ -167,8 +217,10 @@ const addCourseLesson = composeP(addLesson, getCourse)
 
 ### copyProp
 
+`@articulate/funky/lib/copyProp`
+
 ```haskell
-copyProp : String -> String -> { k: v } -> { k: v }
+copyProp :: String -> String -> { k: v } -> { k: v }
 ```
 
 Quickly copy one property on an object to another key.
@@ -181,8 +233,10 @@ copyProp('id', 'courseId', { id: 'abc' }) //=> { id: 'abc', courseId: 'abc' }
 
 ### evolveP
 
+`@articulate/funky/lib/evolveP`
+
 ```haskell
-evolveP : { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
+evolveP :: { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
 ```
 
 An async version of [`R.evolve`](http://devdocs.io/ramda/index#evolve) that accepts Promise-returning transformation functions.
@@ -197,8 +251,10 @@ evolveP({ author: getProfile }, { author: 'abc' }) // Promise { author: { name: 
 
 ### juxtP
 
+`@articulate/funky/lib/juxtP`
+
 ```haskell
-juxtP : [a... -> Promise b] -> a... -> Promise [b]
+juxtP :: [a... -> Promise b] -> a... -> Promise [b]
 ```
 
 An async version of [`R.juxt`](http://devdocs.io/ramda/index#juxt) that accepts Promise-returning branching functions.
@@ -213,8 +269,10 @@ const deleteCourseAndLessons = juxtP([ deleteCourse, deleteLessons ])
 
 ### mapP
 
+`@articulate/funky/lib/mapP`
+
 ```haskell
-mapP : (a -> Promise b) -> [a] -> Promise [b]
+mapP :: (a -> Promise b) -> [a] -> Promise [b]
 ```
 
 An async version of [`R.map`]() that accepts a Promise-returning function.
@@ -229,8 +287,10 @@ mapP(getProfile, ['abc','def']) //=> Promise [{ name: 'joey' }, { name: 'fella' 
 
 ### move
 
+`@articulate/funky/lib/move`
+
 ```haskell
-move : Number -> Number -> [a] -> [a]
+move :: Number -> Number -> [a] -> [a]
 ```
 
 Moves a list item from one position to another.
@@ -241,8 +301,10 @@ move(3, 1, ['a','b','c','d']) //=> ['a','d','b','c']
 
 ### normalizeBy
 
+`@articulate/funky/lib/normalizeBy`
+
 ```haskell
-normalizeBy : String -> [{ k: v }] -> { v: { k: v } }
+normalizeBy :: String -> [{ k: v }] -> { v: { k: v } }
 ```
 
 [Normalizes a list](http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html) by building an object, with the IDs of the list items as keys and the items themselves as the values.  List items will be normalized by the specified key, so make sure it is unique.
@@ -254,8 +316,10 @@ normalizeBy('uid', [{ uid: 'abc' }, { uid: 'def' }]) //=> { abc: { uid: 'abc' },
 
 ### overP
 
+`@articulate/funky/lib/overP`
+
 ```haskell
-overP : Lens s -> (a -> Promise b) -> s a -> Promise s b
+overP :: Lens s -> (a -> Promise b) -> s a -> Promise s b
 ```
 
 An async version of [`R.over`](http://ramdajs.com/docs/#over) that accepts a Promise-returning function.
@@ -270,8 +334,10 @@ overP(headLens, asyncToUpper, ['foo', 'bar', 'baz']) //=> Promise ['FOO', 'bar',
 
 ### promisify
 
+`@articulate/funky/lib/promisify`
+
 ```haskell
-promisify : ((a..., b -> ()) -> (), c) -> a... -> Promise b
+promisify :: ((a..., b -> ()) -> (), c) -> a... -> Promise b
 ```
 
 Takes a function which accepts a node-style callback and returns a new function that returns a `Promise` instead.  Will also bind it to an optional context object.
@@ -282,8 +348,10 @@ const upload = promisify(s3.upload, s3)
 
 ### reject
 
+`@articulate/funky/lib/reject`
+
 ```haskell
-reject : a -> Promise Error
+reject :: a -> Promise Error
 ```
 
 Returns a `Promise` object that is rejected with the given reason.  A bound version of [`Promise.reject`](http://devdocs.io/javascript/global_objects/promise/reject), but also wraps non-errors with `Error` for a consistent interface.
@@ -297,8 +365,10 @@ reject('bad guy')            //=> Promise Error('bad guy')
 
 ### rename
 
+`@articulate/funky/lib/rename`
+
 ```haskell
-rename : String -> String -> { k: v } -> { k: v }
+rename :: String -> String -> { k: v } -> { k: v }
 ```
 
 Easily rename a property on an object to be a different key.
@@ -311,8 +381,10 @@ rename('id', 'courseId', { id: 'abc' }) //=> { courseId: 'abc' }
 
 ### resolve
 
+`@articulate/funky/lib/resolve`
+
 ```haskell
-resolve : a -> Promise a
+resolve :: a -> Promise a
 ```
 
 Lifts a value into a `Promise`.  Just a bound version of [`Promise.resolve`](http://devdocs.io/javascript/global_objects/promise/resolve).
@@ -325,8 +397,10 @@ resolve('a') //=> Promise 'a'
 
 ### tapP
 
+`@articulate/funky/lib/tapP`
+
 ```haskell
-tapP : (a -> Promise b) -> a -> Promise a
+tapP :: (a -> Promise b) -> a -> Promise a
 ```
 
 An async version of [`R.tap`](http://devdocs.io/ramda/index#tap) that accepts a Promise-returning function.
@@ -339,8 +413,10 @@ tapP(a => Promise.resolve('b'), 'a') //=> Promise 'a'
 
 ### validate
 
+`@articulate/funky/lib/validate`
+
 ```haskell
-validate : Schema -> a -> Promise a
+validate :: Schema -> a -> Promise a
 ```
 
 Validates a value against a [`Joi`](https://github.com/hapijs/joi) schema.  Curried and promisified for ease of use.

@@ -1,31 +1,30 @@
+const always    = require('ramda/src/always')
 const curry     = require('ramda/src/curry')
 const fromPairs = require('ramda/src/fromPairs')
-const identity  = require('ramda/src/identity')
 const pair      = require('ramda/src/pair')
 const toPairs   = require('ramda/src/toPairs')
 
 const mapP = require('./mapP')
 
-// evolveP :: { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
-const evolveP = (transforms, obj) => {
-  const transform = ([ key, val ]) => {
-    let xfrm = transforms[key]
+// assembleP :: { k: (v -> Promise v) } -> v -> Promise { k: v }
+const assembleP = (xfrms, x) => {
+  const transform = ([ key, xfrm ]) => {
     const type = typeof xfrm
 
     xfrm = type === 'function'
       ? xfrm
       : xfrm && type === 'object'
-        ? _evolveP(xfrm)
-        : identity
+        ? _assembleP(xfrm)
+        : always(xfrm)
 
-    return Promise.resolve(val)
+    return Promise.resolve(x)
       .then(xfrm)
       .then(pair(key))
   }
 
-  return Promise.resolve(toPairs(obj))
+  return Promise.resolve(toPairs(xfrms))
     .then(mapP(transform))
     .then(fromPairs)
 }
 
-const _evolveP = module.exports = curry(evolveP)
+const _assembleP = module.exports = curry(assembleP)
