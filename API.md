@@ -4,10 +4,11 @@
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
 | [`assemble`](#assemble) | `{ k: (v -> v) } -> v -> { k: v }` |
-| [`assembleP`](#assembleP) | `{ k: (v -> Promise v) } -> v -> Promise { k: v }` |
-| [`assocWith`](#assocWith) | `String -> ({ k: v } -> a) -> { k: v } -> { k: v }` |
-| [`assocWithP`](#assocWithP) | `String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }` |
-| [`backoff`](#backoff) | `Number -> Number -> (a... -> Promise b) -> a... -> Promise b` |
+| [`assembleP`](#assemblep) | `{ k: (v -> Promise v) } -> v -> Promise { k: v }` |
+| [`assocWith`](#assocwith) | `String -> ({ k: v } -> a) -> { k: v } -> { k: v }` |
+| [`assocWithP`](#assocwithp) | `String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }` |
+| [`backoff`](#backoff) | `{ k: v } -> (a... -> Promise b) -> a... -> Promise b` |
+| [`batch`](#batch) | `{ k: v } -> ([a] -> Promise [b]) -> a -> Promise b` |
 | [`combine`](#combine) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
 | [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
 | [`combineAllP`](#combineallp) | `[({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }` |
@@ -106,15 +107,62 @@ assocWithP('foo', always(Promise.resolve('bar'), {})) //=> Promise { foo: 'bar' 
 `@articulate/funky/lib/backoff`
 
 ```haskell
-backoff :: Number -> Number -> (a... -> Promise b) -> a... -> Promise b
+backoff :: { k: v } -> (a... -> Promise b) -> a... -> Promise b
 ```
 
-Accepts a `base` delay in ms and max `tries`, and then wraps an async function with a [full jitter exponential backoff](https://www.awsarchitectureblog.com/2015/03/backoff.html) algorithm.  Useful for recovering from intermittent network failures.  Will retry for all caught errors until the number of `tries` is reached.
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `base` | `Number` | `250` | base delay in ms |
+| `tries` | `Number` | `Infinity` | max number of tries |
+| `when` | `a -> Boolean` | `R.T` | only backoff if this returns true |
+
+Accepts an options object, and then wraps an async function with a [full jitter exponential backoff](https://www.awsarchitectureblog.com/2015/03/backoff.html) algorithm.  Useful for recovering from intermittent network failures.  Will retry for caught errors that pass the `when` predicate until the number of `tries` is reached.
 
 ```js
-const fetchImage = opts => { /* async, and might fail sometimes */ }
+const { propEq } = require('ramda')
 
-backoff(250, 5, fetchImage) //=> a new function that tries at most 5 times before rejecting
+const fetchImage = data => { /* async, and might fail sometimes */ }
+
+const opts = {
+  base: 500,
+  tries: 5,
+  when: propEq('statusCode', 429)
+}
+
+backoff(opts, fetchImage)
+//=> a new function that tries at most 5 times before rejecting if the error is `429 Too Many Requests`
+```
+
+### batch
+
+`@articulate/funky/lib/batch`
+
+```haskell
+batch :: { k: v } -> ([a] -> Promise [b]) -> a -> Promise b
+```
+
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `limit` | `Number` | `Infinity` | max length of each batch |
+| `wait` | `Number` | `32` | max wait before throttling batches |
+
+Accepts an options object, and then wraps a batched async function.  Returns a throttled, unary async function that batches the args of successive invocations and resolves each individual promise with the matching result.  Useful for cutting down IO by combining requests.
+
+```js
+const { batch, evolveP } = require('@articulate/funky')
+const { composeP, prop } = require('ramda')
+
+const createMedia = batch({ limit: 128 }, require('../data/createMedia'))
+
+const asset = composeP(prop('id'), createMedia)
+
+const convertMedia = evolveP({
+  audio: asset,
+  image: asset,
+  video: asset
+})
+// will create new media records for each entry in the object by batching
+// them in a single request, and then store the new ids on the result object
 ```
 
 ### combine
