@@ -58,9 +58,9 @@ describe('batch', () => {
 
     const delayed = x =>
       new Promise((res, rej) =>
-        setTimeout(() =>
+        setTimeout(() => {
           batched(x).then(res, rej)
-        , 64)
+        }, 64)
       )
 
     const test = evolveP({
