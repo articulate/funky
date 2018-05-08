@@ -1,27 +1,41 @@
-const apply = require('ramda/src/apply')
-const curry = require('ramda/src/curry')
+const apply  = require('ramda/src/apply')
+const curry  = require('ramda/src/curry')
+const ifElse = require('ramda/src/ifElse')
+const T      = require('ramda/src/T')
 
-// backoff :: Number -> Number -> (a... -> Promise b) -> a... -> Promise b
-const backoff = (base, tries, f) =>
-  (...args) => {
+const reject = Promise.reject.bind(Promise)
+
+// backoff :: { k: v } -> (a... -> Promise b) -> a... -> Promise b
+const backoff = (opts={}, f) => {
+  const {
+    base  = 250,
+    tries = 10,
+    when  = T
+  } = opts
+
+  const backedOff = (...args) => {
     let attempt = 0
 
     const retry = () =>
-      new Promise((resolve, reject) => {
+      new Promise((res, rej) => {
         setTimeout(() => {
-          Promise.resolve(args)
-            .then(apply(f))
-            .catch(tryAgain)
-            .then(resolve)
-            .catch(reject)
+          run().then(res, rej)
         }, delay(base, attempt))
       })
 
-    const tryAgain = err =>
-      ++attempt < tries ? retry() : Promise.reject(err)
+    const run = () =>
+      Promise.resolve(args)
+        .then(apply(f))
+        .catch(ifElse(when, tryAgain, reject))
 
-    return retry()
+    const tryAgain = err =>
+      ++attempt < tries ? retry() : reject(err)
+
+    return run()
   }
+
+  return backedOff
+}
 
 const delay = (base, attempt) =>
   attempt && randBetween(0, base * Math.pow(2, attempt))

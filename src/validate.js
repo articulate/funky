@@ -1,14 +1,21 @@
 const curryN = require('ramda/src/curryN')
-const Joi    = require('joi')
 
-const promisify = require('./promisify')
+let validate
 
-const defaults = { abortEarly: false }
+try {
+  const Joi       = require('joi')
+  const promisify = require('./promisify')
+  const _validate = promisify(Joi.validate, Joi)
+  const defaults  = { abortEarly: false }
 
-const _validate = promisify(Joi.validate, Joi)
+  validate = (schema, x, opts=defaults) =>
+    _validate(x, schema, opts)
+}
+
+catch (e) {
+  validate = (_, x) =>
+    Promise.resolve(x)
+}
 
 // validate :: Schema -> a -> Promise a
-const validate = (schema, x, opts=defaults) =>
-  _validate(x, schema, opts)
-
 module.exports = curryN(2, validate)
