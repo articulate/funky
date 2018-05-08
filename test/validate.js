@@ -1,6 +1,7 @@
 const Joi        = require('joi')
 const { expect } = require('chai')
 const property   = require('prop-factory')
+const proxyquire = require('proxyquire')
 
 const { validate } = require('..')
 
@@ -43,6 +44,18 @@ describe('validate', () => {
 
     it('respects those options', () =>
       expect(res()).to.eql({ foo: 'bar' })
+    )
+  })
+
+  describe('when joi is missing', () => {
+    const validate = proxyquire('../lib/validate', { joi: null })
+
+    beforeEach(() =>
+      validate(schema, bad).then(res)
+    )
+
+    it('pass-thrus values without validation', () =>
+      expect(res()).to.eql(bad)
     )
   })
 })
