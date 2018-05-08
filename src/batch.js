@@ -16,22 +16,29 @@ const batch = (opts={}, f) => {
   let rejects  = []
   let resolves = []
   let timeout  = 0
+  let uniq     = new Map()
 
   const batched = arg => {
-    const promise = new Promise((res, rej) => {
-      args.push(arg)
-      rejects.push(rej)
-      resolves.push(res)
-    })
+    if (uniq.has(arg)) {
+      return uniq.get(arg)
+    } else {
+      const promise = new Promise((res, rej) => {
+        args.push(arg)
+        rejects.push(rej)
+        resolves.push(res)
+      })
 
-    if (args.length >= limit) run()
+      uniq.set(arg, promise)
 
-    else if (!timeout) {
-      const delta = new Date() - last
-      timeout = setTimeout(run, max(0, wait - delta))
+      if (args.length >= limit) run()
+
+      else if (!timeout) {
+        const delta = new Date() - last
+        timeout = setTimeout(run, max(0, wait - delta))
+      }
+
+      return promise
     }
-
-    return promise
   }
 
   const run = () => {
@@ -46,6 +53,7 @@ const batch = (opts={}, f) => {
     rejects  = []
     resolves = []
     timeout  = 0
+    uniq.clear()
   }
 
   return batched

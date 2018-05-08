@@ -85,4 +85,27 @@ describe('batch', () => {
       expect(spy.calls.length).to.equal(2)
     })
   })
+
+  describe('with duplicate args', () => {
+    const obj = { a: 'a', b: 'a' }
+
+    const asyncListFn = () =>
+      (spy(), Promise.resolve(['dupe']))
+
+    const batched = batch(undefined, asyncListFn)
+
+    const test = evolveP({
+      a: batched,
+      b: batched
+    })
+
+    beforeEach(() =>
+      test(obj).then(res)
+    )
+
+    it('shares promises with duplicate args to only batch uniqs', () => {
+      expect(res()).to.eql({ a: 'dupe', b: 'dupe' })
+      expect(spy.calls.length).to.equal(1)
+    })
+  })
 })
