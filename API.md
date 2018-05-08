@@ -113,7 +113,7 @@ backoff :: { k: v } -> (a... -> Promise b) -> a... -> Promise b
 | Option | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
 | `base` | `Number` | `250` | base delay in ms |
-| `tries` | `Number` | `Infinity` | max number of tries |
+| `tries` | `Number` | `10` | max number of tries |
 | `when` | `a -> Boolean` | `R.T` | only backoff if this returns true |
 
 Accepts an options object, and then wraps an async function with a [full jitter exponential backoff](https://www.awsarchitectureblog.com/2015/03/backoff.html) algorithm.  Useful for recovering from intermittent network failures.  Will retry for caught errors that pass the `when` predicate until the number of `tries` is reached.

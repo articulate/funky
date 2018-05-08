@@ -9,7 +9,7 @@ const reject = Promise.reject.bind(Promise)
 const backoff = (opts={}, f) => {
   const {
     base  = 250,
-    tries = Infinity,
+    tries = 10,
     when  = T
   } = opts
 
