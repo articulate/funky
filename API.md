@@ -469,6 +469,8 @@ validate :: Schema -> a -> Promise a
 
 Validates a value against a [`Joi`](https://github.com/hapijs/joi) schema.  Curried and promisified for ease of use.
 
+**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
+
 ```js
 const schema = Joi.object({
   id: Joi.string().required()

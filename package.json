@@ -28,7 +28,6 @@
     "test:coverage": "nyc yarn run test"
   },
   "dependencies": {
-    "joi": "^10.6.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
@@ -37,8 +36,12 @@
     "chai": "^4.1.1",
     "coveralls": "^2.13.1",
     "eslint": "^4.3.0",
+    "joi": "10.x",
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "prop-factory": "^1.0.0"
+  },
+  "peerDependencies": {
+    "joi": "10.x"
   }
 }
