@@ -36,13 +36,13 @@
     "chai": "^4.1.1",
     "coveralls": "^2.13.1",
     "eslint": "^4.3.0",
-    "joi": "10.x",
+    "joi": "^10.0",
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "prop-factory": "^1.0.0",
     "proxyquire": "^2.0.1"
   },
   "peerDependencies": {
-    "joi": "10.x"
+    "joi": ">=10"
   }
 }
