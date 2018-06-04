@@ -1,7 +1,7 @@
 const { apply, composeP, curry, unapply, useWith } = require('ramda')
 const all = require('./all')
 
-// useWithP :: (b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d
+// useWithP :: (a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)
 const useWithP = (fn, transformers) =>
   useWith(unapply(composeP(apply(fn), all)), transformers)
 
