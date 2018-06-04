@@ -28,6 +28,7 @@
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
+| [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
 | [`validate`](#validate) | `Schema -> a -> Promise a` |
 
 ### all
@@ -457,6 +458,25 @@ Runs the given function with the supplied value, and then resolves with that val
 
 ```js
 tapP(a => Promise.resolve('b'), 'a') //=> Promise 'a'
+```
+
+### useWithP
+
+`@articulate/funky/lib/useWithP`
+
+```haskell
+useWithP :: (a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)
+```
+
+An async version of [`R.useWith`](https://ramdajs.com/docs/#useWith) that accepts Promise-returning transformer and original functions.
+
+Accepts a function `fn` and a list of transformer functions and returns a new curried function. When the new function is invoked, it calls the function `fn` with parameters consisting of the result of calling each supplied handler on successive arguments to the new function.
+
+See also [`convergeP`](#convergep)
+
+```js
+const getCourseAndAuthor = useWithP(pair, [ fetchCourseById, fetchAuthorById ])
+getCourseAndAuthor('course-id', 'author-id') //=> Promise [ course, author ]
 ```
 
 ### validate
