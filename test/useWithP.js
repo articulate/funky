@@ -6,7 +6,7 @@ const { useWithP } = require('..')
 
 const whatevs = useWithP(mult, [ add(1), add(2) ])
 
-describe('convergeP', () => {
+describe('useWithP', () => {
   const res = property()
 
   beforeEach(() =>
