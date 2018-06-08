@@ -1,13 +1,21 @@
-const apply   = require('ramda/src/apply')
-const compose = require('ramda/src/compose')
-const curry   = require('ramda/src/curry')
-const map     = require('ramda/src/map')
-const toPairs = require('ramda/src/toPairs')
-
-const rename = require('./rename')
+const curry = require('ramda/src/curry')
 
 // renameAll :: { k: v } -> { k: v } -> { k: v }
-const renameAll = (renames, obj) =>
-  compose(apply(compose), map(apply(rename)), toPairs)(renames)(obj)
+const renameAll = (renames, obj) => {
+  if (Object.keys(renames).length > 0) {
+    obj = Object.assign({}, obj)
+    for (let frum in renames) {
+      if (!(frum in obj)) continue
+      const to = renames[frum]
+      if (typeof to === 'object') {
+        obj[frum] = renameAll(to, obj[frum])
+      } else {
+        obj[to] = obj[frum]
+        delete obj[frum]
+      }
+    }
+  }
+  return obj
+}
 
 module.exports = curry(renameAll)
