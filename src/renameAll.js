@@ -4,9 +4,12 @@ const curry = require('ramda/src/curry')
 const renameAll = (renames, obj) => {
   if (Object.keys(renames).length > 0) {
     obj = Object.assign({}, obj)
+
     for (let frum in renames) {
       if (!(frum in obj)) continue
+
       const to = renames[frum]
+
       if (typeof to === 'object') {
         obj[frum] = renameAll(to, obj[frum])
       } else {
