@@ -27,6 +27,7 @@
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
 | [`renameAll`](#renameall) | `{ k: v } -> { k: v } -> { k: v }` |
+| [`renamePath`](#renamepath) | `[String] -> String -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
@@ -440,9 +441,25 @@ renameAll :: { k: v } -> { k: v } -> { k: v }
 Rename multiple properties on an object to have different keys.
 
 ```js
-const orig = { first_name: 'Miles', last_name: 'Callisto' }
-renameAll({ first_name: 'firstName', last_name: 'lastName' }, orig)
-//=> { firstName: 'Miles', lastName: 'Callisto' }
+const orig = { user: { first_name: 'Miles', last_name: 'Callisto' } }
+renameAll({ user: { first_name: 'firstName' } }, orig)
+//=> { user: { firstName: 'Miles', last_name: 'Callisto' } }
+```
+
+### renamePath
+
+`@articulate/funky/lib/renamePath`
+
+```haskell
+renamePath :: [String] -> String -> { k: v } -> { k: v }
+```
+
+Rename a deeply nested path on an object to have a different key.
+
+```js
+const orig = { user: { first_name: 'Miles', last_name: 'Callisto' } }
+renamePath(['user', 'first_name'], 'firstName', orig)
+//=> { user: { firstName: 'Miles', last_name: 'Callisto' } }
 ```
 
 ### resolve
