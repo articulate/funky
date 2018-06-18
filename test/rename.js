@@ -7,4 +7,14 @@ describe('rename', () => {
     expect(rename('foo', 'baz', { foo: 'bar' }))
       .to.eql({ baz: 'bar' })
   )
+
+  it('does not "rename" missing properties', () =>
+    expect(rename('foo', 'baz', { not: 'bar' }))
+      .to.not.have.property('foo')
+  )
+
+  it('is curried', () =>
+    expect(rename('foo', 'baz')({ foo: 'bar' }))
+      .to.eql({ baz: 'bar' })
+  )
 })

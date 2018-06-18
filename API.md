@@ -26,6 +26,8 @@
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
+| [`renameAll`](#renameall) | `{ k: v } -> { k: v } -> { k: v }` |
+| [`renamePath`](#renamepath) | `[String] -> String -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
@@ -376,8 +378,8 @@ An async version of [`R.over`](http://ramdajs.com/docs/#over) that accepts a Pro
 Returns the result of "setting" the portion of the given data structure focused by the given lens to the result of applying the given async function to the focused value.
 
 ```js
-var headLens = lensIndex(0)
-var asyncToUpper = compose(resolve, toUpper)
+const headLens = lensIndex(0)
+const asyncToUpper = compose(resolve, toUpper)
 overP(headLens, asyncToUpper, ['foo', 'bar', 'baz']) //=> Promise ['FOO', 'bar', 'baz']
 ```
 
@@ -422,10 +424,42 @@ rename :: String -> String -> { k: v } -> { k: v }
 
 Easily rename a property on an object to be a different key.
 
-See also [`copyProp`](#copyprop).
+See also [`copyProp`](#copyprop), [`renameAll`](#renameall).
 
 ```js
 rename('id', 'courseId', { id: 'abc' }) //=> { courseId: 'abc' }
+```
+
+### renameAll
+
+`@articulate/funky/lib/renameAll`
+
+```haskell
+renameAll :: { k: v } -> { k: v } -> { k: v }
+```
+
+Rename multiple properties on an object to have different keys.
+
+```js
+const orig = { user: { first_name: 'Miles', last_name: 'Callisto' } }
+renameAll({ user: { first_name: 'firstName' } }, orig)
+//=> { user: { firstName: 'Miles', last_name: 'Callisto' } }
+```
+
+### renamePath
+
+`@articulate/funky/lib/renamePath`
+
+```haskell
+renamePath :: [String] -> String -> { k: v } -> { k: v }
+```
+
+Rename a deeply nested path on an object to have a different key.
+
+```js
+const orig = { user: { first_name: 'Miles', last_name: 'Callisto' } }
+renamePath(['user', 'first_name'], 'firstName', orig)
+//=> { user: { firstName: 'Miles', last_name: 'Callisto' } }
 ```
 
 ### resolve
