@@ -3,8 +3,8 @@
 | Function | Signature |
 | -------- | --------- |
 | [`all`](#all) | `[Promise a] -> Promise [a]` |
-| [`assemble`](#assemble) | `{ k: (v -> v) } -> v -> { k: v }` |
-| [`assembleP`](#assemblep) | `{ k: (v -> Promise v) } -> v -> Promise { k: v }` |
+| [`assemble`](#assemble) | `{ k: ((...v) -> v) } -> (...v) -> { k: v }` |
+| [`assembleP`](#assemblep) | `{ k: ((...v) -> Promise v) } -> (...v) -> Promise { k: v }` |
 | [`assocWith`](#assocwith) | `String -> ({ k: v } -> a) -> { k: v } -> { k: v }` |
 | [`assocWithP`](#assocwithp) | `String -> ({ k: v } -> Promise a) -> { k: v } -> Promise { k: v }` |
 | [`backoff`](#backoff) | `{ k: v } -> (a... -> Promise b) -> a... -> Promise b` |
