@@ -20,7 +20,7 @@ describe('assembleP', () => {
     )
   })
 
-  describe('unary', () => {
+  describe('n-ary', () => {
     const sjoin = glue => (...params) => Promise.resolve(params.join(glue))
 
     const assembly = assembleP({
