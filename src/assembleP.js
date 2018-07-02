@@ -1,13 +1,14 @@
 const always    = require('ramda/src/always')
-const curry     = require('ramda/src/curry')
+const apply     = require('ramda/src/apply')
+const curryN    = require('ramda/src/curryN')
 const fromPairs = require('ramda/src/fromPairs')
 const pair      = require('ramda/src/pair')
 const toPairs   = require('ramda/src/toPairs')
 
 const mapP = require('./mapP')
 
-// assembleP :: { k: (v -> Promise v) } -> v -> Promise { k: v }
-const assembleP = (xfrms, x) => {
+// assembleP :: { k: ((...v) -> Promise v) } -> (...v) -> Promise { k: v }
+const assembleP = (xfrms, ...x) => {
   const transform = ([ key, xfrm ]) => {
     const type = typeof xfrm
 
@@ -18,7 +19,7 @@ const assembleP = (xfrms, x) => {
         : always(xfrm)
 
     return Promise.resolve(x)
-      .then(xfrm)
+      .then(apply(xfrm))
       .then(pair(key))
   }
 
@@ -27,4 +28,4 @@ const assembleP = (xfrms, x) => {
     .then(fromPairs)
 }
 
-const _assembleP = module.exports = curry(assembleP)
+const _assembleP = module.exports = curryN(2, assembleP)
