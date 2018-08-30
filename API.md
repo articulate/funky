@@ -20,6 +20,7 @@
 | [`evolveP`](#evolvep) | `{ k: (v -> Promise v) } -> { k: v } -> Promise { k: v }` |
 | [`juxtP`](#juxtp) | `[a... -> Promise b] -> a... -> Promise [b]` |
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
+| [`mapValues`](#mapvalues) | `({ k: v } -> { k: v }) -> { k: v } -> { k: v }` |
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
 | [`overP`](#overp) | `Lens s => (a -> Promise b) -> s a -> Promise s b` |
@@ -334,6 +335,26 @@ See also [`evolveP`](#evolvep).
 
 ```js
 mapP(getProfile, ['abc','def']) //=> Promise [{ name: 'joey' }, { name: 'fella' }]
+```
+
+### mapValues
+
+`@articulate/funky/lib/mapValues`
+
+```haskell
+mapValues :: ({ k: v } -> { k: v }) -> { k: v } -> { k: v }
+```
+
+Applies a function to the values of an object. Inverse of [the ramda cookbook's `mapKeys` function](https://github.com/ramda/ramda/wiki/Cookbook).
+
+```js
+const { omit } = require('ramda')
+
+mapValues(omit([ 'a' ]), {
+  foo: { a: 1, b: 2, c: 3 },
+  bar: { a: 4, b: 5, c: 6 },
+})
+//=> { foo: { b: 2, c: 3 }, bar: { b: 5, c: 6 } }
 ```
 
 ### move
