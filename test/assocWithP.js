@@ -6,16 +6,28 @@ const { assocWithP } = require('..')
 const concatBarToFoo = obj =>
   Promise.resolve(obj.foo + 'bar')
 
-const doIt = assocWithP('baz', concatBarToFoo)
-
 describe('assocWith', () => {
-  const res = property()
+  context('when partially applied', () => {
+    const res = property()
 
-  beforeEach(() =>
-    doIt({ foo: 'foo' }).then(res)
-  )
+    beforeEach(() =>
+      assocWithP('baz', concatBarToFoo)({ foo: 'foo' }).then(res)
+    )
 
-  it('sets the foo property to the result of the function', () =>
-    expect(res()).to.eql({ foo: 'foo', baz: 'foobar' })
-  )
+    it('sets the foo property to the result of the function', () =>
+      expect(res()).to.eql({ foo: 'foo', baz: 'foobar' })
+    )
+  })
+
+  context('when all arguments provided', () => {
+    const res = property()
+
+    beforeEach(() =>
+      assocWithP('baz', concatBarToFoo, { foo: 'foo' }).then(res)
+    )
+
+    it('sets the foo property to the result of the function', () =>
+      expect(res()).to.eql({ foo: 'foo', baz: 'foobar' })
+    )
+  })
 })
