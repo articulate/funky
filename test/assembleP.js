@@ -21,12 +21,10 @@ describe('assembleP', () => {
   })
 
   describe('n-ary', () => {
-    const sjoin = glue => (...params) => Promise.resolve(params.join(glue))
-
     const assembly = assembleP({
-      foo: sjoin(','),
+      foo: (one, two) => Promise.resolve([ one, two ].join(',')),
       bar: {
-        baz: sjoin('|'),
+        baz: (one, two, three) => Promise.resolve([ one, two, three ].join('|')),
       },
       bat: 1
     })
@@ -39,10 +37,14 @@ describe('assembleP', () => {
 
     it('assembles the result of async transforms into a new object', () =>
       expect(res()).to.eql({
-        foo: 'one,two,three',
+        foo: 'one,two',
         bar: { baz: 'one|two|three' },
         bat: 1,
       })
     )
+
+    it('returns max function length', () => {
+      expect(assembly.length).to.equal(3)
+    })
   })
 })

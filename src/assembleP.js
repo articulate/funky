@@ -5,6 +5,7 @@ const fromPairs = require('ramda/src/fromPairs')
 const pair      = require('ramda/src/pair')
 const toPairs   = require('ramda/src/toPairs')
 
+const doAssemble = require('./lib/doAssemble')
 const mapP = require('./mapP')
 
 // assembleP :: { k: ((...v) -> Promise v) } -> (...v) -> Promise { k: v }
@@ -28,4 +29,6 @@ const assembleP = (xfrms, ...x) => {
     .then(fromPairs)
 }
 
-const _assembleP = module.exports = curryN(2, assembleP)
+const _assembleP = curryN(2, assembleP)
+
+module.exports = doAssemble(assembleP)

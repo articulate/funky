@@ -23,30 +23,35 @@ describe('assemble', () => {
   })
 
   describe('n-ary', () => {
-    const sjoin = glue => (...params) => params.join(glue)
-
     const xfrms = {
-      foo: sjoin(','),
+      foo: (one, two) => [ one, two ].join(','),
       bar: {
-        baz: sjoin('|'),
+        baz: (one, two, three) => [ one, two, three ].join('|'),
       },
       bat: 1
     }
 
     it('assembles the result of multiple transforms into a new object', () =>
       expect(assemble(xfrms, 'one', 'two', 'three')).to.eql({
-        foo: 'one,two,three',
+        foo: 'one,two',
         bar: { baz: 'one|two|three' },
         bat: 1,
       })
     )
 
-    it('is curried', () =>
-      expect(assemble(xfrms)('one', 'two', 'three')).to.eql({
-        foo: 'one,two,three',
+    it('is curried', () => {
+      const expectation = {
+        foo: 'one,two',
         bar: { baz: 'one|two|three' },
         bat: 1,
-      })
-    )
+      }
+      expect(assemble(xfrms)('one', 'two', 'three')).to.eql(expectation)
+      expect(assemble(xfrms)('one')('two', 'three')).to.eql(expectation)
+      expect(assemble(xfrms)('one')('two')('three')).to.eql(expectation)
+    })
+
+    it('returns max function length', () => {
+      expect(assemble(xfrms).length).to.equal(3)
+    })
   })
 })
