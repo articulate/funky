@@ -6,11 +6,12 @@ const length    = require('ramda/src/length')
 const map       = require('ramda/src/map')
 const T         = require('ramda/src/T')
 const transduce = require('ramda/src/transduce')
+const values    = require('ramda/src/values')
 
 const isTypeOf = curry((type, x) => typeof x === type)
 
 const getAssembleLength = xfrms =>
-  transduce(map(getLength), Math.max, 1, Object.values(xfrms))
+  transduce(map(getLength), Math.max, 1, values(xfrms))
 
 const getLength = cond([
   [ isTypeOf('object'),   getAssembleLength ],
