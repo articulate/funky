@@ -19,9 +19,9 @@ const getLength = cond([
   [ T,                    always(0)         ],
 ])
 
-const doAssemble = curry((assemble, xfrms, ...x) => {
+const doAssemble = (assemble, xfrms, ...x) => {
   const fn = curryN(getAssembleLength(xfrms) + 1, assemble)(xfrms)
   return x.length === 0 ? fn : fn(...x)
-})
+}
 
-module.exports = doAssemble
+module.exports = curry(doAssemble)
