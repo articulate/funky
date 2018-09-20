@@ -11,7 +11,7 @@ const values    = require('ramda/src/values')
 const isTypeOf = curry((type, x) => typeof x === type)
 
 const getAssembleLength = xfrms =>
-  transduce(map(getLength), Math.max, 1, values(xfrms))
+  transduce(map(getLength), Math.max, 0, values(xfrms))
 
 const getLength = cond([
   [ isTypeOf('object'),   getAssembleLength ],
@@ -20,8 +20,16 @@ const getLength = cond([
 ])
 
 const doAssemble = (assemble, xfrms, ...x) => {
-  const fn = curryN(getAssembleLength(xfrms) + 1, assemble)(xfrms)
-  return x.length === 0 ? fn : fn(...x)
+  const len = getAssembleLength(xfrms)
+  const fn = curryN(len + 1, assemble)
+  if (x.length === 0) {
+    if (len === 0) {
+      // explicity return a function with arity 0 that will spread args
+      return (...y) => fn(xfrms, ...y)
+    }
+    return fn(xfrms)
+  }
+  return fn(xfrms, ...x)
 }
 
 module.exports = curry(doAssemble)

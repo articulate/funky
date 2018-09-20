@@ -47,4 +47,32 @@ describe('assembleP', () => {
       expect(assembly.length).to.equal(3)
     })
   })
+
+  describe('0-ary', () => {
+    const assembly = assembleP({
+      foo: (...params) => Promise.resolve(params.join(',')),
+      bar: {
+        baz: (...params) => Promise.resolve(params.join('|')),
+      },
+      bat: 1
+    })
+
+    const res = property()
+
+    beforeEach(() =>
+      assembly('one', 'two', 'three').then(res)
+    )
+
+    it('assembles the result of async transforms into a new object', () =>
+      expect(res()).to.eql({
+        foo: 'one,two,three',
+        bar: { baz: 'one|two|three' },
+        bat: 1,
+      })
+    )
+
+    it('returns max function length', () => {
+      expect(assembly.length).to.equal(0)
+    })
+  })
 })

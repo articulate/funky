@@ -54,4 +54,35 @@ describe('assemble', () => {
       expect(assemble(xfrms).length).to.equal(3)
     })
   })
+
+  describe('0-ary', () => {
+    const xfrms = {
+      foo: (...params) => params.join(','),
+      bar: {
+        baz: (...params) => params.join('|'),
+      },
+      bat: 1
+    }
+
+    it('assembles the result of multiple transforms into a new object', () =>
+      expect(assemble(xfrms, 'one', 'two', 'three')).to.eql({
+        foo: 'one,two,three',
+        bar: { baz: 'one|two|three' },
+        bat: 1,
+      })
+    )
+
+    it('is curried', () => {
+      const expectation = {
+        foo: 'one,two,three',
+        bar: { baz: 'one|two|three' },
+        bat: 1,
+      }
+      expect(assemble(xfrms)('one', 'two', 'three')).to.eql(expectation)
+    })
+
+    it('returns max function length', () => {
+      expect(assemble(xfrms).length).to.equal(0)
+    })
+  })
 })
