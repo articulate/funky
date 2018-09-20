@@ -1,5 +1,5 @@
-const curryN = require('ramda/src/curryN')
 const map    = require('ramda/src/map')
+const doAssemble = require('./lib/doAssemble')
 
 // assemble :: { k: ((...v) -> v) } -> (...v) -> { k: v }
 const assemble = (xfrms, ...x) => {
@@ -15,4 +15,4 @@ const assemble = (xfrms, ...x) => {
   return map(transform, xfrms)
 }
 
-module.exports = curryN(2, assemble)
+module.exports = doAssemble(assemble)
