@@ -518,18 +518,20 @@ getCourseAndAuthor('course-id', 'author-id') //=> Promise [ course, author ]
 `@articulate/funky/lib/validate`
 
 ```haskell
-validate :: Schema -> a -> Promise a
+validate :: Joi -> Schema -> a -> Promise a
 ```
 
 Validates a value against a [`Joi`](https://github.com/hapijs/joi) schema.  Curried and promisified for ease of use.
 
-**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
+**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application and passed as the first argument.
 
 ```js
+const Joi = require('joi')
+
 const schema = Joi.object({
   id: Joi.string().required()
 })
 
-validate(schema, { id: 'abc' }) //=> Promise { id: 'abc' }
-validate(schema, { id: 123 })   //=> Promise ValidationError
+validate(Joi, schema, { id: 'abc' }) //=> Promise { id: 'abc' }
+validate(Joi, schema, { id: 123 })   //=> Promise ValidationError
 ```
