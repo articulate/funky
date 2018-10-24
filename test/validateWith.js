@@ -100,16 +100,6 @@ describe('validateWith', () => {
     )
   })
 
-  describe('when joi is missing', () => {
-    beforeEach(() =>
-      validateWith(null, schema, bad).then(res)
-    )
-
-    it('pass-thrus values without validation', () =>
-      expect(res()).to.eql(bad)
-    )
-  })
-
   describe('with joi extended', () => {
     describe('with a valid value', () => {
       beforeEach(() =>
