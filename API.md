@@ -187,13 +187,30 @@ combine(always({ foo: 1 }), { foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
 `@articulate/funky/lib/combineAll`
 
 ```haskell
-combineAll :: combineAll : [a... -> { k: v }] -> { k: v } -> { k: v }
+combineAll :: [a... -> { k: v }] -> { k: v } -> { k: v }
 ```
 
 Accepts a list of functions & an object. Merges the results of all the functions into the object left-to-right
 
 ```js
 combineAll([ always({ foo: 1, bar: 2 }), always({ bar: 3 }) ], { foo: 4, baz: 5 }) //=> { foo: 1, bar: 3, baz: 5 }
+```
+
+### combineAllP
+
+`@articulate/funky/lib/combineAllP`
+
+```haskell
+combineAllP :: [({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }
+```
+
+Async version of [`combineAll`](#combineall)
+
+```js
+combineAllP([
+  always(resolve({ foo: 1, bar: 2 })),
+  always(resolve({ bar: 3 }))
+], { foo: 4, baz: 5 }) //=> Promise { foo: 1, baz: 5, bar: 3 }
 ```
 
 ### combineP
