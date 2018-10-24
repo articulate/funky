@@ -32,6 +32,7 @@
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
 | [`validate`](#validate) | `Schema -> a -> Promise a` |
+| [`validateWith`](#validatewith) | `Joi -> Schema -> a -> Promise a` |
 
 ### all
 
@@ -518,12 +519,33 @@ getCourseAndAuthor('course-id', 'author-id') //=> Promise [ course, author ]
 `@articulate/funky/lib/validate`
 
 ```haskell
-validate :: Joi -> Schema -> a -> Promise a
+validate :: Schema -> a -> Promise a
 ```
 
 Validates a value against a [`Joi`](https://github.com/hapijs/joi) schema.  Curried and promisified for ease of use.
 
-**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application and passed as the first argument.
+**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
+
+```js
+const schema = Joi.object({
+  id: Joi.string().required()
+})
+
+validate(schema, { id: 'abc' }) //=> Promise { id: 'abc' }
+validate(schema, { id: 123 })   //=> Promise ValidationError
+```
+
+### validateWith
+
+`@articulate/funky/lib/validateWith`
+
+```haskell
+validateWith :: Joi -> Schema -> a -> Promise a
+```
+
+Like `validate` but validates using a user-provided `Joi` object. Useful when working with [Joi's `extend()`](https://github.com/hapijs/joi/blob/v14.0.1/API.md#extendextension).
+
+**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
 
 ```js
 const Joi = require('joi')
@@ -532,6 +554,6 @@ const schema = Joi.object({
   id: Joi.string().required()
 })
 
-validate(Joi, schema, { id: 'abc' }) //=> Promise { id: 'abc' }
-validate(Joi, schema, { id: 123 })   //=> Promise ValidationError
+validateWith(Joi, schema, { id: 'abc' }) //=> Promise { id: 'abc' }
+validateWith(Joi, schema, { id: 123 })   //=> Promise ValidationError
 ```
