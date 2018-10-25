@@ -32,6 +32,7 @@
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
 | [`validate`](#validate) | `Schema -> a -> Promise a` |
+| [`validateWith`](#validatewith) | `Joi -> Schema -> a -> Promise a` |
 
 ### all
 
@@ -549,4 +550,27 @@ const schema = Joi.object({
 
 validate(schema, { id: 'abc' }) //=> Promise { id: 'abc' }
 validate(schema, { id: 123 })   //=> Promise ValidationError
+```
+
+### validateWith
+
+`@articulate/funky/lib/validateWith`
+
+```haskell
+validateWith :: Joi -> Schema -> a -> Promise a
+```
+
+Like `validate` but validates using a user-provided `Joi` object. Useful when working with [Joi's `extend()`](https://github.com/hapijs/joi/blob/v14.0.1/API.md#extendextension).
+
+**Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
+
+```js
+const Joi = require('joi')
+
+const schema = Joi.object({
+  id: Joi.string().required()
+})
+
+validateWith(Joi, schema, { id: 'abc' }) //=> Promise { id: 'abc' }
+validateWith(Joi, schema, { id: 123 })   //=> Promise ValidationError
 ```
