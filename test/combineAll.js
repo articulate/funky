@@ -1,26 +1,28 @@
 const { expect } = require('chai')
-const property   = require('prop-factory')
 const always     = require('ramda/src/always')
 
 const { combineAll } = require('..')
 
-const whatevs = combineAll([
-  always({ foo: 1 }),
-  always({ bar: 2 }),
-])
-
 describe('combineAll', () => {
-  const res = property()
+  context('when partially applied', () => {
+    it('combines the results of all functions', () =>
+      expect(
+        combineAll([
+          always({ foo: 1 }),
+          always({ bar: 2 }),
+        ])({ baz: 3 })
+      ).to.eql({ foo: 1, bar: 2, baz: 3 })
+    )
+  })
 
-  beforeEach(() =>
-    res(whatevs({ baz: 3 }))
-  )
-
-  it('combines the results of all functions', () =>
-    expect(res()).to.eql({
-      foo: 1,
-      bar: 2,
-      baz: 3,
-    })
-  )
+  context('when all arguments provided', () => {
+    it('combines the results of all functions', () =>
+      expect(
+        combineAll([
+          always({ foo: 1 }),
+          always({ bar: 2 }),
+        ], { baz: 3 })
+      ).to.eql({ foo: 1, bar: 2, baz: 3 })
+    )
+  })
 })

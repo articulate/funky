@@ -27,13 +27,17 @@ describe('renameAll', () => {
     }
   }
 
-  it('rename multiple nested properties on an object using a name-map', () =>
-    expect(renameAll(renames, orig)).to.eql(expected)
-  )
+  context('when partially applied', () => {
+    it('renames multiple nested properties on an object using a name-map', () =>
+      expect(renameAll(renames)(orig)).to.eql(expected)
+    )
+  })
 
-  it('is curried', () =>
-    expect(renameAll(renames)(orig)).to.eql(expected)
-  )
+  context('when all arguments provided', () => {
+    it('renames multiple nested properties on an object using a name-map', () =>
+      expect(renameAll(renames, orig)).to.eql(expected)
+    )
+  })
 
   it('does not error in the pathological case', () =>
     expect(renameAll({}, orig)).to.eql(orig)

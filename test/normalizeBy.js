@@ -9,12 +9,25 @@ const items = [
 ]
 
 describe('normalizeBy', () => {
-  it('normalizes a list by the specified key', () =>
-    expect(normalizeBy('id', items))
-      .to.eql({
-        a: { id: 'a' },
-        b: { id: 'b' },
-        c: { id: 'c' }
-      })
-  )
+  context('when partially applied', () => {
+    it('normalizes a list by the specified key', () =>
+      expect(normalizeBy('id')(items))
+        .to.eql({
+          a: { id: 'a' },
+          b: { id: 'b' },
+          c: { id: 'c' }
+        })
+    )
+  })
+
+  context('when all arguments provided', () => {
+    it('normalizes a list by the specified key', () =>
+      expect(normalizeBy('id', items))
+        .to.eql({
+          a: { id: 'a' },
+          b: { id: 'b' },
+          c: { id: 'c' }
+        })
+    )
+  })
 })

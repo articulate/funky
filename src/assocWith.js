@@ -1,10 +1,10 @@
-const converge = require('ramda/src/converge')
-const curry    = require('ramda/src/curry')
 const assoc    = require('ramda/src/assoc')
+const converge = require('ramda/src/converge')
 const identity = require('ramda/src/identity')
+const uncurryN = require('ramda/src/uncurryN')
 
 // assocWith :: String -> ({ k: v } -> a) -> { k: v } -> { k: v }
-const assocWith = (key, fn, obj) =>
-  converge(assoc(key), [fn, identity])(obj)
+const assocWith = (key, fn) =>
+  converge(assoc(key), [fn, identity])
 
-module.exports = curry(assocWith)
+module.exports = uncurryN(3, assocWith)
