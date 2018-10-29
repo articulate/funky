@@ -27,10 +27,10 @@ describe('assembleP', () => {
 
   describe('n-ary', () => {
     const assembly = assembleP({
-      foo: (one, two) => Promise.resolve([ one, two ].join(',')),
-      bar: {
+      foo: [[ (one, two) => Promise.resolve([ one, two ].join(',')) ]],
+      bar: [{
         baz: (one, two, three) => Promise.resolve([ one, two, three ].join('|')),
-      },
+      }],
       bat: 1
     })
 
@@ -42,8 +42,8 @@ describe('assembleP', () => {
 
     it('assembles the result of async transforms into a new object', () =>
       expect(res()).to.eql({
-        foo: 'one,two',
-        bar: { baz: 'one|two|three' },
+        foo: [[ 'one,two' ]],
+        bar: [{ baz: 'one|two|three' }],
         bat: 1,
       })
     )
@@ -55,10 +55,10 @@ describe('assembleP', () => {
 
   describe('0-ary', () => {
     const assembly = assembleP({
-      foo: (...params) => Promise.resolve(params.join(',')),
-      bar: {
+      foo: [[ (...params) => Promise.resolve(params.join(',')) ]],
+      bar: [{
         baz: (...params) => Promise.resolve(params.join('|')),
-      },
+      }],
       bat: 1
     })
 
@@ -70,8 +70,8 @@ describe('assembleP', () => {
 
     it('assembles the result of async transforms into a new object', () =>
       expect(res()).to.eql({
-        foo: 'one,two,three',
-        bar: { baz: 'one|two|three' },
+        foo: [[ 'one,two,three' ]],
+        bar: [{ baz: 'one|two|three' }],
         bat: 1,
       })
     )
