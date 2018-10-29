@@ -8,7 +8,12 @@ const { assembleP } = require('..')
 
 describe('assembleP', () => {
   describe('unary', () => {
-    const assembly = assembleP({ foo: add(1), bar: { baz: mult(3) }, bat: 1 })
+    const assembly = assembleP({
+      foo: [[ add(1) ]],
+      bar: [{ baz: mult(3) }],
+      bat: 1
+    })
+
     const res = property()
 
     beforeEach(() =>
@@ -16,16 +21,16 @@ describe('assembleP', () => {
     )
 
     it('assembles the result of async transforms into a new object', () =>
-      expect(res()).to.eql({ foo: 2, bar: { baz: 3 }, bat: 1 })
+      expect(res()).to.eql({ foo: [[ 2 ]], bar: [{ baz: 3 }], bat: 1 })
     )
   })
 
   describe('n-ary', () => {
     const assembly = assembleP({
-      foo: (one, two) => Promise.resolve([ one, two ].join(',')),
-      bar: {
+      foo: [[ (one, two) => Promise.resolve([ one, two ].join(',')) ]],
+      bar: [{
         baz: (one, two, three) => Promise.resolve([ one, two, three ].join('|')),
-      },
+      }],
       bat: 1
     })
 
@@ -37,8 +42,8 @@ describe('assembleP', () => {
 
     it('assembles the result of async transforms into a new object', () =>
       expect(res()).to.eql({
-        foo: 'one,two',
-        bar: { baz: 'one|two|three' },
+        foo: [[ 'one,two' ]],
+        bar: [{ baz: 'one|two|three' }],
         bat: 1,
       })
     )
@@ -50,10 +55,10 @@ describe('assembleP', () => {
 
   describe('0-ary', () => {
     const assembly = assembleP({
-      foo: (...params) => Promise.resolve(params.join(',')),
-      bar: {
+      foo: [[ (...params) => Promise.resolve(params.join(',')) ]],
+      bar: [{
         baz: (...params) => Promise.resolve(params.join('|')),
-      },
+      }],
       bat: 1
     })
 
@@ -65,8 +70,8 @@ describe('assembleP', () => {
 
     it('assembles the result of async transforms into a new object', () =>
       expect(res()).to.eql({
-        foo: 'one,two,three',
-        bar: { baz: 'one|two|three' },
+        foo: [[ 'one,two,three' ]],
+        bar: [{ baz: 'one|two|three' }],
         bat: 1,
       })
     )
