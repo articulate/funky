@@ -8,7 +8,12 @@ const { assembleP } = require('..')
 
 describe('assembleP', () => {
   describe('unary', () => {
-    const assembly = assembleP({ foo: add(1), bar: { baz: mult(3) }, bat: 1 })
+    const assembly = assembleP({
+      foo: [[ add(1) ]],
+      bar: [{ baz: mult(3) }],
+      bat: 1
+    })
+
     const res = property()
 
     beforeEach(() =>
@@ -16,7 +21,7 @@ describe('assembleP', () => {
     )
 
     it('assembles the result of async transforms into a new object', () =>
-      expect(res()).to.eql({ foo: 2, bar: { baz: 3 }, bat: 1 })
+      expect(res()).to.eql({ foo: [[ 2 ]], bar: [{ baz: 3 }], bat: 1 })
     )
   })
 
