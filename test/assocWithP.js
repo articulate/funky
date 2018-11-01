@@ -12,15 +12,17 @@ describe('assocWithP', () => {
     })
   )
 
-  it('is curried, arity 1', () =>
-    assocWithP('baz', concatBarToFoo)({ foo: 'foo' }).then(res => {
-      expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
-    })
-  )
+  describe('argument application', () => {
+    it('apply fn(x)(x)(x)', () =>
+      assocWithP('baz')(concatBarToFoo)({ foo: 'foo' }).then(res => {
+        expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
+      })
+    )
 
-  it('is curried, arity 2, unary', () =>
-    assocWithP('baz')(concatBarToFoo)({ foo: 'foo' }).then(res => {
-      expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
-    })
-  )
+    it('apply fn(x, x)(x)', () =>
+      assocWithP('baz', concatBarToFoo)({ foo: 'foo' }).then(res => {
+        expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
+      })
+    )
+  })
 })
