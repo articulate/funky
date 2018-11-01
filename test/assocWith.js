@@ -11,11 +11,20 @@ describe('assocWith', () => {
       .to.eql({ foo: 'foo', baz: 'foobar' })
   )
 
-  it('is curried', () => {
-    expect(assocWith('baz', concatBarToFoo)({ foo: 'foo' }))
-      .to.eql({ foo: 'foo', baz: 'foobar' })
+  describe('argument application', () => {
+    it('apply fn(x)(x)(x)', () =>
+      expect(assocWith('baz')(concatBarToFoo)({ foo: 'foo' }))
+        .to.eql({ foo: 'foo', baz: 'foobar' })
+    )
 
-    expect(assocWith('baz')(concatBarToFoo)({ foo: 'foo' }))
-      .to.eql({ foo: 'foo', baz: 'foobar' })
+    it('apply fn(x, x)(x)', () =>
+      expect(assocWith('baz', concatBarToFoo)({ foo: 'foo' }))
+        .to.eql({ foo: 'foo', baz: 'foobar' })
+    )
+
+    it('apply fn(x)(x, x)', () =>
+      expect(assocWith('baz')(concatBarToFoo, { foo: 'foo' }))
+        .to.eql({ foo: 'foo', baz: 'foobar' })
+    )
   })
 })
