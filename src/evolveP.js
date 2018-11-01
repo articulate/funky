@@ -6,8 +6,7 @@ const pair      = require('ramda/src/pair')
 const toPairs   = require('ramda/src/toPairs')
 const uncurryN  = require('ramda/src/uncurryN')
 
-const mapP      = require('./mapP')
-const resolve   = require('./resolve')
+const mapP = require('./mapP')
 
 // evolveP :: { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
 const evolveP = transforms => {
@@ -26,10 +25,7 @@ const evolveP = transforms => {
       .then(pair(key))
   }
 
-  return compose(
-    composeP(fromPairs, mapP(transform), resolve),
-    toPairs
-  )
+  return compose(composeP(fromPairs, mapP(transform)), toPairs)
 }
 
 const _evolveP = module.exports = uncurryN(2, evolveP)
