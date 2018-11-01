@@ -31,11 +31,11 @@ describe('renameAll', () => {
     expect(renameAll(renames, orig)).to.eql(expected)
   )
 
-  it('does not error in the pathological case', () =>
-    expect(renameAll({}, orig)).to.eql(orig)
-  )
-
   it('is curried', () =>
     expect(renameAll(renames)(orig)).to.eql(expected)
+  )
+
+  it('does not error in the pathological case', () =>
+    expect(renameAll({}, orig)).to.eql(orig)
   )
 })
