@@ -9,8 +9,13 @@ describe('combineWith', () => {
     expect(combineWith(multiply, add(2), 3)).to.eql(15)
   )
 
-  it('is curried', () => {
-    expect(combineWith(multiply, add(2))(3)).to.eql(15)
-    expect(combineWith(multiply)(add(2))(3)).to.eql(15)
+  describe('argument application', () => {
+    it('apply fn(x)(x)(x)', () =>
+      expect(combineWith(multiply)(add(2))(3)).to.eql(15)
+    )
+
+    it('apply fn(x, x)(x)', () =>
+      expect(combineWith(multiply, add(2))(3)).to.eql(15)
+    )
   })
 })
