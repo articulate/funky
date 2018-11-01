@@ -13,8 +13,8 @@ describe('rename', () => {
       .to.not.have.property('foo')
   )
 
-  it('is curried', () =>
-    expect(rename('foo', 'baz')({ foo: 'bar' }))
-      .to.eql({ baz: 'bar' })
-  )
+  it('is curried', () => {
+    expect(rename('foo', 'baz')({ foo: 'bar' })).to.eql({ baz: 'bar' })
+    expect(rename('foo')('baz')({ foo: 'bar' })).to.eql({ baz: 'bar' })
+  })
 })
