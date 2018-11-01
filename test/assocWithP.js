@@ -24,5 +24,11 @@ describe('assocWithP', () => {
         expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
       })
     )
+
+    it('apply fn(x)(x, x)', () =>
+      assocWithP('baz')(concatBarToFoo, { foo: 'foo' }).then(res => {
+        expect(res).to.eql({ foo: 'foo', baz: 'foobar' })
+      })
+    )
   })
 })
