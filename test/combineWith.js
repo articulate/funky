@@ -17,5 +17,9 @@ describe('combineWith', () => {
     it('apply fn(x, x)(x)', () =>
       expect(combineWith(multiply, add(2))(3)).to.eql(15)
     )
+
+    it('apply fn(x)(x, x)', () =>
+      expect(combineWith(multiply)(add(2), 3)).to.eql(15)
+    )
   })
 })
