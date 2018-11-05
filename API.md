@@ -22,6 +22,7 @@
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
+| [`notNil`](#notNil) | `a -> Boolean` |
 | [`overP`](#overp) | `Lens s => (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
@@ -382,6 +383,25 @@ normalizeBy :: String -> [{ k: v }] -> { v: { k: v } }
 normalizeBy('uid', [{ uid: 'abc' }, { uid: 'def' }]) //=> { abc: { uid: 'abc' }, def: { uid: 'def' }}
 ```
 
+### notNil
+
+`@articulate/funky/lib/notNil`
+
+```haskell
+notNil :: a -> Boolean
+```
+
+Checks for nil value. Returns true if not a nil value, false otherwise.
+
+```js
+notNil(null)        // false
+notNil(undefined)   // false
+notNil('')          // true
+notNil([])          // true
+notNil({})          // true
+notNil(0)           // true
+notNil(false)       // true
+```
 
 ### overP
 
