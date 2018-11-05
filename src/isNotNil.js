@@ -1,5 +1,5 @@
 // isNotNil :: a -> Boolean
 const isNotNil =
-  x => x != null && !Number.isNaN(x)
+  x => x != null
 
 module.exports = isNotNil

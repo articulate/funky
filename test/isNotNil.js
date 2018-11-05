@@ -11,13 +11,13 @@ describe('isNotNill', () => {
     it('undefined', () => {
       expect(isNotNil(undefined)).to.eql(false)
     })
-
-    it('NaN', () => {
-      expect(isNotNil(NaN)).to.eql(false)
-    })
   })
 
-  describe('with non-nil empty/falsey values', () => {
+  describe('with non-nil values', () => {
+    it('NaN', () => {
+      expect(isNotNil(NaN)).to.eql(true)
+    })
+
     it('[]', () => {
       expect(isNotNil([])).to.eql(true)
     })
@@ -37,9 +37,7 @@ describe('isNotNill', () => {
     it('false', () => {
       expect(isNotNil(false)).to.eql(true)
     })
-  })
 
-  describe('with non-nil non-empty values', () => {
     it('Arrays', () => {
       expect(isNotNil([ 'a', 'b', 'c' ])).to.eql(true)
     })
