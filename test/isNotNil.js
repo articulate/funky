@@ -11,6 +11,10 @@ describe('isNotNill', () => {
     it('undefined', () => {
       expect(isNotNil(undefined)).to.eql(false)
     })
+
+    it('NaN', () => {
+      expect(isNotNil(NaN)).to.eql(false)
+    })
   })
 
   describe('with non-nil empty/falsey values', () => {
