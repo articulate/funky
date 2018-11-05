@@ -1,59 +1,59 @@
 const { expect }  = require('chai')
 
-const notNil = require('../src/notNil')
+const isNotNil = require('../src/isNotNil')
 
-describe('notNill', () => {
+describe('isNotNill', () => {
   describe('with nil values', () => {
     it('null', () => {
-      expect(notNil(null)).to.eql(false)
+      expect(isNotNil(null)).to.eql(false)
     })
 
     it('undefined', () => {
-      expect(notNil(undefined)).to.eql(false)
+      expect(isNotNil(undefined)).to.eql(false)
     })
   })
 
   describe('with non-nil empty/falsey values', () => {
     it('[]', () => {
-      expect(notNil([])).to.eql(true)
+      expect(isNotNil([])).to.eql(true)
     })
 
     it('{}', () => {
-      expect(notNil({})).to.eql(true)
+      expect(isNotNil({})).to.eql(true)
     })
 
     it('\'\'', () => {
-      expect(notNil('')).to.eql(true)
+      expect(isNotNil('')).to.eql(true)
     })
 
     it('0', () => {
-      expect(notNil(0)).to.eql(true)
+      expect(isNotNil(0)).to.eql(true)
     })
 
     it('false', () => {
-      expect(notNil(false)).to.eql(true)
+      expect(isNotNil(false)).to.eql(true)
     })
   })
 
   describe('with non-nil non-empty values', () => {
     it('Arrays', () => {
-      expect(notNil([ 'a', 'b', 'c' ])).to.eql(true)
+      expect(isNotNil([ 'a', 'b', 'c' ])).to.eql(true)
     })
 
     it('Objects', () => {
-      expect(notNil({ a: 1, b: 'yes', c: false })).to.eql(true)
+      expect(isNotNil({ a: 1, b: 'yes', c: false })).to.eql(true)
     })
 
     it('Strings', () => {
-      expect(notNil('hello world')).to.eql(true)
+      expect(isNotNil('hello world')).to.eql(true)
     })
 
     it('Numbers', () => {
-      expect(notNil(10)).to.eql(true)
+      expect(isNotNil(10)).to.eql(true)
     })
 
     it('true', () => {
-      expect(notNil(true)).to.eql(true)
+      expect(isNotNil(true)).to.eql(true)
     })
   })
 })
