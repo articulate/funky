@@ -1,6 +1,5 @@
-const { complement, isNil } = require('ramda')
-
 // isNotNil :: a -> Boolean
-const isNotNil = complement(isNil)
+const isNotNil =
+  x => x != null
 
 module.exports = isNotNil
