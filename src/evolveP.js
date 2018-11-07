@@ -1,13 +1,15 @@
-const curry     = require('ramda/src/curry')
+const compose   = require('ramda/src/compose')
+const composeP  = require('ramda/src/composeP')
 const fromPairs = require('ramda/src/fromPairs')
 const identity  = require('ramda/src/identity')
 const pair      = require('ramda/src/pair')
 const toPairs   = require('ramda/src/toPairs')
+const uncurryN  = require('ramda/src/uncurryN')
 
 const mapP = require('./mapP')
 
 // evolveP :: { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
-const evolveP = (transforms, obj) => {
+const evolveP = transforms => {
   const transform = ([ key, val ]) => {
     let xfrm = transforms[key]
     const type = typeof xfrm
@@ -23,9 +25,7 @@ const evolveP = (transforms, obj) => {
       .then(pair(key))
   }
 
-  return Promise.resolve(toPairs(obj))
-    .then(mapP(transform))
-    .then(fromPairs)
+  return compose(composeP(fromPairs, mapP(transform)), toPairs)
 }
 
-const _evolveP = module.exports = curry(evolveP)
+const _evolveP = module.exports = uncurryN(2, evolveP)

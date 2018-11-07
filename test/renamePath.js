@@ -10,9 +10,17 @@ describe('renamePath', () => {
     expect(renamePath(['a', 'b'], 'B', orig)).to.eql(expected)
   )
 
-  it('is curried', () => {
-    expect(renamePath(['a', 'b'])('B', orig)).to.eql(expected)
-    expect(renamePath(['a', 'b'], 'B')(orig)).to.eql(expected)
-    expect(renamePath(['a', 'b'])('B')(orig)).to.eql(expected)
+  describe('argument application', () => {
+    it('apply fn(x)(x)(x)', () =>
+      expect(renamePath(['a', 'b'])('B')(orig)).to.eql(expected)
+    )
+
+    it('apply fn(x)(x, x)', () =>
+      expect(renamePath(['a', 'b'])('B', orig)).to.eql(expected)
+    )
+
+    it('apply fn(x, x)(x)', () =>
+      expect(renamePath(['a', 'b'], 'B')(orig)).to.eql(expected)
+    )
   })
 })

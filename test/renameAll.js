@@ -27,7 +27,7 @@ describe('renameAll', () => {
     }
   }
 
-  it('rename multiple nested properties on an object using a name-map', () =>
+  it('renames multiple nested properties on an object using a name-map', () =>
     expect(renameAll(renames, orig)).to.eql(expected)
   )
 

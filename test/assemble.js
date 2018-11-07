@@ -83,6 +83,4 @@ describe('assemble', () => {
       expect(assemble(xfrms).length).to.equal(0)
     })
   })
-
-
 })

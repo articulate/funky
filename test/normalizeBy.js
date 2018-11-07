@@ -17,4 +17,13 @@ describe('normalizeBy', () => {
         c: { id: 'c' }
       })
   )
+
+  it('is curried', () =>
+    expect(normalizeBy('id')(items))
+      .to.eql({
+        a: { id: 'a' },
+        b: { id: 'b' },
+        c: { id: 'c' }
+      })
+  )
 })

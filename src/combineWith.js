@@ -1,9 +1,9 @@
 const converge = require('ramda/src/converge')
-const curry = require('ramda/src/curry')
 const identity = require('ramda/src/identity')
+const uncurryN = require('ramda/src/uncurryN')
 
 // combineWith :: (c -> b -> d) (a -> b) -> c -> d
 const combineWith = (mf, f) =>
   converge(mf, [ identity, f ])
 
-module.exports = curry(combineWith)
+module.exports = uncurryN(3, combineWith)
