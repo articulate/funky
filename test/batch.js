@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const property   = require('prop-factory')
 const Spy        = require('@articulate/spy')
 
-const { identity, map, objOf, prop, reverse } = require('ramda')
+const { identity, prop } = require('ramda')
 
 const { batch, evolveP } = require('..')
 
@@ -112,12 +112,8 @@ describe('batch', () => {
   })
 
   describe('with matching enabled', () => {
-    const asyncListFn = ids => {
-      spy()
-      return Promise.resolve(ids)
-        .then(reverse)
-        .then(map(objOf('id')))
-    }
+    const asyncListFn = () =>
+      (spy(), Promise.resolve([{ id: 'c' }, { id: 'b' }]))
 
     const batched =
       batch({ inputKey: identity, outputKey: prop('id') }, asyncListFn)
@@ -135,7 +131,7 @@ describe('batch', () => {
     it('matches each result to the original input', () => {
       expect(spy.calls.length).to.equal(1)
       expect(res()).to.eql({
-        a: { id: 'a' },
+        a: undefined,
         b: { id: 'b' },
         c: { id: 'c' }
       })

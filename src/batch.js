@@ -1,7 +1,6 @@
 const call    = require('ramda/src/call')
-const compose = require('ramda/src/compose')
 const curry   = require('ramda/src/curry')
-const forEach = require('ramda/src/forEach')
+const indexBy = require('ramda/src/indexBy')
 const juxt    = require('ramda/src/juxt')
 const max     = require('ramda/src/max')
 const zipWith = require('ramda/src/zipWith')
@@ -50,11 +49,13 @@ const batch = (opts={}, f) => {
     }
   }
 
-  const matchResolve = resolves => result =>
-    resolves[outputKey(result)](result)
+  const matchResolves = resolves => results => {
+    const indexed = indexBy(outputKey, results)
+    for (let key in resolves) resolves[key](indexed[key])
+  }
 
   const resolveAll =
-    matching ? compose(forEach, matchResolve) : zipWith(call)
+    matching ? matchResolves : zipWith(call)
 
   const run = () => {
     Promise.resolve(args)

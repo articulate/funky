@@ -171,7 +171,7 @@ const convertMedia = evolveP({
 })
 ```
 
-If both `inputKey` and `outputKey` are supplied, then result-matching is enabled.  Useful for third-party API's that don't return results in the same order requested.
+If both `inputKey` and `outputKey` are supplied, then result-matching is enabled.  Useful for third-party API's that don't return results in the same order requested.  Will resolve an individual call with `undefined` if no matching result is found for a particular input value.
 
 ```js
 const { assocWithP, batch, evolveP } = require('@articulate/funky')
