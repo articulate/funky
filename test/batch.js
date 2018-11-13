@@ -2,6 +2,8 @@ const { expect } = require('chai')
 const property   = require('prop-factory')
 const Spy        = require('@articulate/spy')
 
+const { identity, prop } = require('ramda')
+
 const { batch, evolveP } = require('..')
 
 describe('batch', () => {
@@ -106,6 +108,33 @@ describe('batch', () => {
     it('shares promises with duplicate args to only batch uniqs', () => {
       expect(res()).to.eql({ a: 'dupe', b: 'dupe' })
       expect(spy.calls.length).to.equal(1)
+    })
+  })
+
+  describe('with matching enabled', () => {
+    const asyncListFn = () =>
+      (spy(), Promise.resolve([{ id: 'c' }, { id: 'b' }]))
+
+    const batched =
+      batch({ inputKey: identity, outputKey: prop('id') }, asyncListFn)
+
+    const test = evolveP({
+      a: batched,
+      b: batched,
+      c: batched
+    })
+
+    beforeEach(() =>
+      test(obj).then(res)
+    )
+
+    it('matches each result to the original input', () => {
+      expect(spy.calls.length).to.equal(1)
+      expect(res()).to.eql({
+        a: undefined,
+        b: { id: 'b' },
+        c: { id: 'c' }
+      })
     })
   })
 })

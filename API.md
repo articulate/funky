@@ -147,7 +147,9 @@ batch :: { k: v } -> ([a] -> Promise [b]) -> a -> Promise b
 
 | Option | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
+| `inputKey` | `a -> String` | | generates input key to match results with inputs |
 | `limit` | `Number` | `Infinity` | max length of each batch |
+| `outputKey` | `a -> String` | | generates output key to match results with inputs |
 | `wait` | `Number` | `32` | max wait before throttling batches |
 
 Accepts an options object, and then wraps a batched async function.  Returns a throttled, unary async function that batches the args of successive invocations and resolves each individual promise with the matching result.  Useful for cutting down IO by combining requests.
@@ -160,13 +162,27 @@ const createMedia = batch({ limit: 128 }, require('../data/createMedia'))
 
 const asset = composeP(prop('id'), createMedia)
 
+// will create new media records for each entry in the object by batching
+// them in a single request, and then store the new ids on the result object
 const convertMedia = evolveP({
   audio: asset,
   image: asset,
   video: asset
 })
-// will create new media records for each entry in the object by batching
-// them in a single request, and then store the new ids on the result object
+```
+
+If both `inputKey` and `outputKey` are supplied, then result-matching is enabled.  Useful for third-party API's that don't return results in the same order requested.  Will resolve an individual call with `undefined` if no matching result is found for a particular input value.
+
+```js
+const { assocWithP, batch, evolveP } = require('@articulate/funky')
+const { identity, prop } = require('ramda')
+
+const { getCharges } = require('../services/thirdParty')
+
+// accepts individual ids, batches them into a single request,
+// then resolves with result objects matched by their `id` properties
+const getSub =
+  batch({ inputKey: identity, outputKey: prop('id') }, getCharges)
 ```
 
 ### combine
