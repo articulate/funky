@@ -23,7 +23,7 @@
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
 | [`onSuccess`](#onsuccess) | `(a -> b) -> (a -> c) -> a -> b` |
-| [`onSuccessP`](#onsuccessp) | `(a -> Promise b) -> (a -> c) -> a -> b` |
+| [`onSuccessP`](#onsuccessp) | `(a -> Promise b) -> (a -> c) -> a -> Promise b` |
 | [`overP`](#overp) | `Lens s -> (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
@@ -429,7 +429,7 @@ const result = onSuccess(addOne, setX, 1)
 `@articulate/funky/lib/onSuccessP`
 
 ```haskell
-onSuccessP :: (a -> Promise b) -> (a -> c) -> a -> b
+onSuccessP :: (a -> Promise b) -> (a -> c) -> a -> Promise b
 ```
 
 An async version of [`onSuccess`](#onsuccess) that accepts a Promise-returning function.

@@ -7,7 +7,7 @@ const pipeP     = require('ramda/src/pipeP')
 const combineWithP = require('./combineWithP')
 const overP = require('./overP')
 
-// onSuccessP :: (a -> Promise e b) -> (a -> c) -> b
+// onSuccessP :: (a -> Promise e b) -> (a -> c) -> Promise b
 const onSuccessP = (afterThisP, that, data) => pipeP(
   combineWithP(pair, afterThisP),
   overP(lensIndex(0), that),
