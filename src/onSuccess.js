@@ -7,7 +7,7 @@ const pipe      = require('ramda/src/pipe')
 
 const combineWith = require('./combineWith')
 
-// onSuccessP :: (a -> b) -> (a -> c) -> b
+// onSuccess :: (a -> b) -> (a -> c) -> b
 const onSuccess = (afterThis, that, data) => pipe(
   combineWith(pair, afterThis),
   over(lensIndex(0), that),
