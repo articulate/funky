@@ -22,9 +22,9 @@
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
-| [`overP`](#overp) | `Lens s -> (a -> Promise b) -> s a -> Promise s b` |
 | [`onSuccess`](#onsuccess) | `(a -> b) -> (a -> c) -> a -> b` |
 | [`onSuccessP`](#onsuccessp) | `(a -> Promise b) -> (a -> c) -> a -> b` |
+| [`overP`](#overp) | `Lens s -> (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
