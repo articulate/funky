@@ -429,12 +429,15 @@ const result = onSuccess(addOne, setX, 1)
 `@articulate/funky/lib/onSuccessP`
 
 ```haskell
-onSuccessP :: (a -> Promise b) -> (a -> c) -> a -> Promise b
+onSuccessP :: (a -> Promise b) -> (a -> Promise c) -> a -> Promise b
 ```
 
-An async version of [`onSuccess`](#onsuccess) that accepts a Promise-returning function.
+An async version of [`onSuccess`](#onsuccess) that accepts Promise-returning functions.
 
-Takes a promise returning function `f1`, any function `f2`, and input argument `a`. Calls `f2` with `a` only if `f1` called with `a` resolves. If `f1` rejects, `f2` is not called. Resolves the result of `f1`.
+**Note: Does not require `f1` and `f2` to both be promise returning.**
+
+Takes two functions `f1` and `f2`, and input argument `a`. Calls `f2` with `a` only if `f1` called with `a` completes without error. If `f1` fails, `f2` is not called. Resolves the result of `f1`.
+
 
 ```js
 let x = 10
