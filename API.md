@@ -22,7 +22,9 @@
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
 | [`move`](#move) | `Number -> Number -> [a] -> [a]` |
 | [`normalizeBy`](#normalizeby) | `String -> [{ k: v }] -> { v: { k: v } }` |
-| [`overP`](#overp) | `Lens s => (a -> Promise b) -> s a -> Promise s b` |
+| [`onSuccess`](#onsuccess) | `(a -> b) -> (a -> c) -> a -> b` |
+| [`onSuccessP`](#onsuccessp) | `(a -> Promise b) -> (a -> c) -> a -> Promise b` |
+| [`overP`](#overp) | `Lens s -> (a -> Promise b) -> s a -> Promise s b` |
 | [`promisify`](#promisify) | `((a..., b -> ()) -> (), c) -> a... -> Promise b` |
 | [`reject`](#reject) | `a -> Promise Error` |
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
@@ -398,6 +400,58 @@ normalizeBy :: String -> [{ k: v }] -> { v: { k: v } }
 normalizeBy('uid', [{ uid: 'abc' }, { uid: 'def' }]) //=> { abc: { uid: 'abc' }, def: { uid: 'def' }}
 ```
 
+### onSuccess
+
+`@articulate/funky/lib/onSuccess`
+
+```haskell
+onSuccess :: (a -> b) -> (a -> c) -> a -> b
+```
+
+Takes two functions `f1` and `f2`, and input argument `a`. Calls `f2` with `a` only if `f1` called with `a` completes without error. If `f1` throws an error, `f2` is not called. Returns the output of `f1`.
+
+```js
+let x = 10
+const addOne = num => num + 1
+const setX = num => x = num
+const result = onSuccess(addOne, setX, 1)
+// result === 2 && x === 2
+
+let x = 10
+const addOne = num => { throw 'Error' }
+const setX = num => x = num
+const result = onSuccess(addOne, setX, 1)
+// 'Error' is thrown && x === 10
+```
+
+### onSuccessP
+
+`@articulate/funky/lib/onSuccessP`
+
+```haskell
+onSuccessP :: (a -> Promise b) -> (a -> Promise c) -> a -> Promise b
+```
+
+An async version of [`onSuccess`](#onsuccess) that accepts Promise-returning functions.
+
+**Note: Does not require `f1` and `f2` to both be promise returning.**
+
+Takes two functions `f1` and `f2`, and input argument `a`. Calls `f2` with `a` only if `f1` called with `a` completes without error. If `f1` fails, `f2` is not called. Resolves the result of `f1`.
+
+
+```js
+let x = 10
+const addOne = num => Promise.resolve(num + 1)
+const setX = num => x = num
+const result = onSuccessP(addOne, setX, 1)
+// result === Promise 2 && x === 2
+
+let x = 10
+const addOne = num => { throw 'Error' }
+const setX = num => x = num
+const result = onSuccessP(addOne, setX, 1)
+// result rejects 'Error' && x === 10
+```
 
 ### overP
 
