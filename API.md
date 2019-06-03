@@ -17,6 +17,7 @@
 | [`combineWithP`](#combinewithp) | `(c -> b -> d) (a -> Promise b) -> Promise c -> Promise d` |
 | [`convergeP`](#convergep) | `(b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d` |
 | [`copyProp`](#copyprop) | `String -> String -> { k: v } -> { k: v }` |
+| [`copyPath`](#copypath) | `[String] -> [String] -> { k: v } -> { k: v }` |
 | [`evolveP`](#evolvep) | `{ k: (v -> Promise v) } -> { k: v } -> Promise { k: v }` |
 | [`juxtP`](#juxtp) | `[a... -> Promise b] -> a... -> Promise [b]` |
 | [`mapP`](#mapp) | `Functor f => (a -> Promise b) -> f a -> Promise f b` |
@@ -300,6 +301,20 @@ See also [`juxtP`](#juxtp).
 const getCourse = convergeP(assoc('course'), [ fetchByCourseId, identity ])
 
 const addCourseLesson = composeP(addLesson, getCourse)
+```
+
+### copyPath
+
+`@articulate/funky/lib/copyPath`
+
+```haskell
+copyPath :: [String] -> [String] -> { k: v } -> { k: v }
+```
+
+Quickly copy one path on an object to another path.
+
+```js
+copyPath(['user', 'id'], ['payload', 'userId'], { user: { id: 'abc' }, payload: { name: 'Bob' } }) //=> { user { id: 'abc' }, payload: { name: 'Bob', userId: 'abc' } }
 ```
 
 ### copyProp
