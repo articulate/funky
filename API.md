@@ -314,7 +314,11 @@ copyPath :: [String] -> [String] -> { k: v } -> { k: v }
 Quickly copy one path on an object to another path.
 
 ```js
-copyPath(['user', 'id'], ['payload', 'userId'], { user: { id: 'abc' }, payload: { name: 'Bob' } }) //=> { user { id: 'abc' }, payload: { name: 'Bob', userId: 'abc' } }
+copyPath(
+  ['user', 'id'],
+  ['payload', 'userId'],
+  { user: { id: 'abc' }, payload: { name: 'Bob' } }
+) //=> { user { id: 'abc' }, payload: { name: 'Bob', userId: 'abc' } }
 ```
 
 ### copyProp
