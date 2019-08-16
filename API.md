@@ -31,6 +31,7 @@
 | [`rename`](#rename) | `String -> String -> { k: v } -> { k: v }` |
 | [`renameAll`](#renameall) | `{ k: v } -> { k: v } -> { k: v }` |
 | [`renamePath`](#renamepath) | `[String] -> String -> { k: v } -> { k: v }` |
+| [`renamePick`](#renamepick) | `{ k: v } -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
@@ -567,6 +568,22 @@ Rename a deeply nested path on an object to have a different key.
 const orig = { user: { first_name: 'Miles', last_name: 'Callisto' } }
 renamePath(['user', 'first_name'], 'firstName', orig)
 //=> { user: { firstName: 'Miles', last_name: 'Callisto' } }
+```
+
+### renamePick
+
+`@articulate/funky/lib/renamePick`
+
+```haskell
+renamePick :: { k: v } -> { k: v } -> { k: v }
+```
+
+Pick and rename multiple properties off an object to have different keys.
+
+```js
+const orig = { user: { first_name: 'Miles', last_name: 'Callisto', email: 'mcallisto@foo.bar' } }
+renamePick({ user: { first_name: 'firstName', last_name: 'lastName' } }, orig)
+//=> { user: { firstName: 'Miles', lastName: 'Callisto' } }
 ```
 
 ### resolve
