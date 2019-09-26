@@ -630,7 +630,7 @@ unlessP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
 
 An async version of [`R.unless`](http://devdocs.io/ramda/index#unless) that accepts Promise-returning functions.
 
-Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the origin value.  If the predicate resolves falsey, it resolves with the result of calling the supplied function.
+Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the original value.  If the predicate resolves falsey, it resolves with the result of calling the supplied function.
 
 See also [`whenP`](#whenp).
 
@@ -712,7 +712,7 @@ whenP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
 
 An async version of [`R.when`](http://devdocs.io/ramda/index#when) that accepts Promise-returning functions.
 
-Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the result of calling the supplied function.  If the predicate resolves falsey, it resolves with the origin value.
+Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the result of calling the supplied function.  If the predicate resolves falsey, it resolves with the original value.
 
 See also [`unlessP`](#unlessp).
 
