@@ -34,9 +34,11 @@
 | [`renamePick`](#renamepick) | `{ k: v } -> { k: v } -> { k: v }` |
 | [`resolve`](#resolve) | `a -> Promise a` |
 | [`tapP`](#tapp) | `(a -> Promise b) -> a -> Promise a` |
+| [`unlessP`](#unlessp) | `(a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a` |
 | [`useWithP`](#usewithp) | `(a -> b -> Promise c) -> [(d -> Promise a), (e -> Promise b)] -> (d -> e -> Promise c)` |
 | [`validate`](#validate) | `Schema -> a -> Promise a` |
 | [`validateWith`](#validatewith) | `Joi -> Schema -> a -> Promise a` |
+| [`whenP`](#whenp) | `(a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a` |
 
 ### all
 
@@ -618,6 +620,25 @@ Runs the given function with the supplied value, and then resolves with that val
 tapP(a => Promise.resolve('b'), 'a') //=> Promise 'a'
 ```
 
+### unlessP
+
+`@articulate/funky/lib/unlessP`
+
+```haskell
+unlessP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
+```
+
+An async version of [`R.unless`](http://devdocs.io/ramda/index#unless) that accepts Promise-returning functions.
+
+Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the origin value.  If the predicate resolves falsey, it resolves with the result of calling the supplied function.
+
+See also [`whenP`](#whenp).
+
+```js
+// only send an email if not already sent
+unlessP(checkEmailAlreadySent, sendEmail)
+```
+
 ### useWithP
 
 `@articulate/funky/lib/useWithP`
@@ -679,4 +700,23 @@ const schema = Joi.object({
 
 validateWith(Joi, schema, { id: 'abc' }) //=> Promise { id: 'abc' }
 validateWith(Joi, schema, { id: 123 })   //=> Promise ValidationError
+```
+
+### whenP
+
+`@articulate/funky/lib/whenP`
+
+```haskell
+whenP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
+```
+
+An async version of [`R.when`](http://devdocs.io/ramda/index#when) that accepts Promise-returning functions.
+
+Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the result of calling the supplied function.  If the predicate resolves falsey, it resolves with the origin value.
+
+See also [`unlessP`](#unlessp).
+
+```js
+// only send followup email if a previous email was sent
+whenP(checkEmailAlreadySent, sendFollowupEmail)
 ```
