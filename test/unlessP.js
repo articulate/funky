@@ -35,7 +35,7 @@ describe('unlessP', () => {
     )
   })
 
-  describe('when the predicate resolves with a falsey value', () => {
+  describe('when the predicate resolves with a falsy value', () => {
     beforeEach(() =>
       addOneUnlessEven(3).then(res)
     )

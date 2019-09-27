@@ -35,7 +35,7 @@ describe('whenP', () => {
     )
   })
 
-  describe('when the predicate resolves with a falsey value', () => {
+  describe('when the predicate resolves with a falsy value', () => {
     beforeEach(() =>
       addOneWhenEven(3).then(res)
     )
