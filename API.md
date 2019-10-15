@@ -437,7 +437,7 @@ let x = 10
 const addOne = num => num + 1
 const setX = num => x = num
 const result = onSuccess(addOne, setX, 1)
-// result === 2 && x === 2
+// result === 2 && x === 1
 
 let x = 10
 const addOne = num => { throw 'Error' }
@@ -466,7 +466,7 @@ let x = 10
 const addOne = num => Promise.resolve(num + 1)
 const setX = num => x = num
 const result = onSuccessP(addOne, setX, 1)
-// result === Promise 2 && x === 2
+// result === Promise 2 && x === 1
 
 let x = 10
 const addOne = num => { throw 'Error' }
