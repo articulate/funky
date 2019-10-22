@@ -20,5 +20,5 @@ const getLength = cond([
   [ T,                    always(0)         ],
 ])
 
-const doAssemble = curryMax(getLength)
+const doAssemble = curryMax(1, getLength)
 module.exports = doAssemble
