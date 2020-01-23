@@ -2,7 +2,7 @@ const { expect } = require('chai')
 const property   = require('prop-factory')
 const Spy        = require('@articulate/spy')
 
-const { identity, prop } = require('ramda')
+const { prop } = require('ramda')
 
 const { batch, evolveP, mapP } = require('..')
 
