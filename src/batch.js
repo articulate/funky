@@ -27,8 +27,10 @@ const batch = (opts={}, f) => {
     matching ? (resolves[inputKey(arg)] = res) : resolves.push(res)
 
   const batched = arg => {
-    if (uniq.has(arg)) {
-      return uniq.get(arg)
+    const cacheKey = matching ? inputKey(arg) : arg
+
+    if (uniq.has(cacheKey)) {
+      return uniq.get(cacheKey)
     } else {
       const promise = new Promise((res, rej) => {
         args.push(arg)
@@ -36,7 +38,7 @@ const batch = (opts={}, f) => {
         addResolve(arg, res)
       })
 
-      uniq.set(arg, promise)
+      uniq.set(cacheKey, promise)
 
       if (args.length >= limit) run()
 
