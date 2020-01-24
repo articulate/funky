@@ -4,7 +4,7 @@ const Spy        = require('@articulate/spy')
 
 const { identity, prop } = require('ramda')
 
-const { batch, evolveP } = require('..')
+const { batch, evolveP, mapP } = require('..')
 
 describe('batch', () => {
   const obj = { a: 'a', b: 'b', c: 'c' }
@@ -135,6 +135,35 @@ describe('batch', () => {
         b: { id: 'b' },
         c: { id: 'c' }
       })
+    })
+  })
+
+  describe('with matching enabled and duplicate inputs', () => {
+    const input = [
+      { id: 'a' },
+      { id: 'b' },
+      { id: 'a' }
+    ]
+
+    const asyncListFn = () =>
+      (spy(), Promise.resolve([{ id: 'a', name: 'Spot' }]))
+
+    const batched =
+      batch({ inputKey: prop('id'), outputKey: prop('id') }, asyncListFn)
+
+    const test = mapP(batched)
+
+    beforeEach(() =>
+      test(input).then(res)
+    )
+
+    it('matches each result to the original input, accounting for duplicates', () => {
+      expect(spy.calls.length).to.equal(1)
+      expect(res()).to.eql([
+        { id: 'a', name: 'Spot' },
+        undefined,
+        { id: 'a', name: 'Spot' }
+      ])
     })
   })
 })
