@@ -692,7 +692,7 @@ Like `validate` but validates using a user-provided `Joi` object. Useful when wo
 **Note:** For validation to work, requires [`Joi`](https://github.com/hapijs/joi) to be installed as a dependency of the consuming application.
 
 ```js
-const Joi = require('joi')
+const Joi = require('@hapi/joi')
 
 const schema = Joi.object({
   id: Joi.string().required()

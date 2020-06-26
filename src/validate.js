@@ -3,13 +3,16 @@ const curryN = require('ramda/src/curryN')
 let validate
 
 try {
-  const Joi       = require('joi')
-  const promisify = require('./promisify')
-  const _validate = promisify(Joi.validate, Joi)
+  const Joi       = require('@hapi/joi')
   const defaults  = { abortEarly: false }
 
-  validate = (schema, x, opts=defaults) =>
-    _validate(x, schema, opts)
+  validate = (schema, value, opts=defaults) => new Promise((resolve, reject) => {
+    try {
+      resolve(Joi.attempt(value, schema, opts))
+    } catch (err) {
+      reject(err)
+    }
+  })
 }
 
 catch (e) {

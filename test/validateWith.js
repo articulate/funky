@@ -1,7 +1,6 @@
-const Joi         = require('joi')
+const Joi         = require('@hapi/joi')
 const { expect }  = require('chai')
 const property    = require('prop-factory')
-const { compose } = require('ramda')
 
 const { validateWith } = require('..')
 
@@ -13,54 +12,35 @@ const good  = { foo: 'bar' }
 const bad   = { foo: 12345 }
 const extra = { foo: 'bar', bar: '123' }
 
-// withNYC :: Joi -> Joi
-const withNYC = joi =>
-  joi.extend({
+const JoiExtended = Joi.extend(joi => {
+  return {
     base: joi.string(),
-    name: 'string',
-    language: {
-      nyc: 'must have NYC in string',
+    type: 'places',
+    messages: {
+      'places.nyc': 'must have NYC in string',
+      'places.usa': 'must have USA in string',
     },
-    rules: [
-      {
-        name: 'nyc',
-        validate(params, value, state, options) {
+    rules: {
+      nyc: {
+        validate(value, helpers) {
           return (new RegExp(/NYC/, 'gi')).test(value)
             ? value
-            : this.createError('string.nyc', { v: value }, state, options)
+            : helpers.error('places.nyc')
         },
       },
-    ],
-  })
-
-// withUSA :: Joi -> Joi
-const withUSA = joi =>
-  joi.extend({
-    base: joi.string(),
-    name: 'string',
-    language: {
-      usa: 'must have USA in string',
-    },
-    rules: [
-      {
-        name: 'usa',
-        validate(params, value, state, options) {
+      usa: {
+        validate(value, helpers) {
           return (new RegExp(/USA/, 'gi')).test(value)
             ? value
-            : this.createError('string.usa', { v: value }, state, options)
+            : helpers.error('places.usa')
         },
       },
-    ],
-  })
-
-const extensions =
-  compose(withNYC, withUSA)
-
-const JoiExtended =
-  extensions(Joi)
+    },
+  }
+})
 
 const schemaExtended = JoiExtended.object({
-  foo: JoiExtended.string().nyc().usa().required()
+  foo: JoiExtended.places().nyc().usa().required()
 })
 
 const goodExtended = { foo: 'NYC, USA' }

@@ -1,11 +1,15 @@
 const curryN = require('ramda/src/curryN')
 
-const promisify = require('./promisify')
 const defaults  = { abortEarly: false }
 
 const validateWith = (joi, schema, x, opts=defaults) => {
-  const _validateWith = promisify(joi.validate, joi)
-  return _validateWith(x, schema, opts)
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(joi.attempt(x, schema, opts))
+    } catch (err) {
+      reject(err)
+    }
+  })
 }
 
 // validateWith :: Joi -> Schema -> a -> Promise a

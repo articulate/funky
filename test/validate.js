@@ -1,4 +1,4 @@
-const Joi        = require('joi')
+const Joi        = require('@hapi/joi')
 const { expect } = require('chai')
 const property   = require('prop-factory')
 const proxyquire = require('proxyquire')
@@ -48,7 +48,7 @@ describe('validate', () => {
   })
 
   describe('when joi is missing', () => {
-    const validate = proxyquire('../lib/validate', { joi: null })
+    const validate = proxyquire('../lib/validate', { '@hapi/joi': null })
 
     beforeEach(() =>
       validate(schema, bad).then(res)
