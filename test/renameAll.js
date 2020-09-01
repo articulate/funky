@@ -8,7 +8,9 @@ describe('renameAll', () => {
     name: 'bird',
     sounds: {
       call: 'chirp'
-    }
+    },
+    title: 'My title',
+    latestTitle: 'haha (business)',
   }
 
   const renames = {
@@ -16,7 +18,9 @@ describe('renameAll', () => {
     count: 'number',
     sounds: {
       call: 'say'
-    }
+    },
+    latestTitle: 'title',
+    title: 'updatedTitle',
   }
 
   const expected = {
@@ -24,7 +28,9 @@ describe('renameAll', () => {
     name: 'bird',
     sounds: {
       say: 'chirp'
-    }
+    },
+    title: 'haha (business)',
+    updatedTitle: 'My title',
   }
 
   it('renames multiple nested properties on an object using a name-map', () =>

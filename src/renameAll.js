@@ -2,22 +2,33 @@ const curry = require('ramda/src/curry')
 
 // renameAll :: { k: v } -> { k: v } -> { k: v }
 const renameAll = (renames, obj) => {
-  obj = Object.assign({}, obj)
+  const newObj = {}
+  const tosMap = {}
+
+  for (let k in obj) {
+    newObj[k] = obj[k]
+  }
 
   for (let frum in renames) {
-    if (!(frum in obj)) continue
+    if (!(frum in obj)) {
+      continue
+    }
 
     const to = renames[frum]
 
     if (typeof to === 'object') {
-      obj[frum] = renameAll(to, obj[frum])
+      newObj[frum] = renameAll(to, obj[frum])
     } else {
-      obj[to] = obj[frum]
-      delete obj[frum]
+      tosMap[to] = true
+      newObj[to] = obj[frum]
+
+      if (!tosMap[frum]) {
+        delete newObj[frum]
+      }
     }
   }
 
-  return obj
+  return newObj
 }
 
 module.exports = curry(renameAll)
