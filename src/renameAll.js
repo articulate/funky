@@ -3,31 +3,14 @@ const curry = require('ramda/src/curry')
 // renameAll :: { k: v } -> { k: v } -> { k: v }
 const renameAll = (renames, obj) => {
   const newObj = {}
-  const tosMap = {}
-
-  for (let k in obj) {
-    newObj[k] = obj[k]
-  }
-
-  for (let frum in renames) {
-    if (!(frum in obj)) {
-      continue
-    }
-
-    const to = renames[frum]
-
-    if (typeof to === 'object') {
-      newObj[frum] = renameAll(to, obj[frum])
+  for (let prevKey in obj) {
+    const nextKey = renames[prevKey] || prevKey
+    if (typeof nextKey === 'object') {
+      newObj[prevKey] = renameAll(renames[prevKey], obj[prevKey])
     } else {
-      tosMap[to] = true
-      newObj[to] = obj[frum]
-
-      if (!tosMap[frum]) {
-        delete newObj[frum]
-      }
+      newObj[nextKey] = obj[prevKey]
     }
   }
-
   return newObj
 }
 
