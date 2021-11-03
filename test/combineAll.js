@@ -10,11 +10,6 @@ const actions = [
 
 describe('combineAll', () => {
   it('combines the results of all functions', () =>
-    expect(combineAll(actions, { baz: 3 }))
-      .to.eql({ foo: 1, bar: 2, baz: 3 })
-  )
-
-  it('is curried', () =>
     expect(combineAll(actions)({ baz: 3 }))
       .to.eql({ foo: 1, bar: 2, baz: 3 })
   )
