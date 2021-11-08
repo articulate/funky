@@ -13,8 +13,8 @@
 | [`combineAll`](#combineall) | `[({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }` |
 | [`combineAllP`](#combineallp) | `[({ k: v }, ...) -> Promise { k: v }] -> ({ k: v }, ...) -> Promise { k: v }` |
 | [`combineP`](#combinep) | `({ k: v } -> Promise { k: v }) -> { k: v } -> Promise { k: v }` |
-| [`combineWith`](#combinewith) | `(c -> b -> d) (a -> b) -> c -> d` |
-| [`combineWithP`](#combinewithp) | `(c -> b -> d) (a -> Promise b) -> Promise c -> Promise d` |
+| [`combineWith`](#combinewith) | `(c -> b -> d) -> (a -> b) -> c -> d` |
+| [`combineWithP`](#combinewithp) | `(c -> b -> d) -> (a -> Promise b) -> Promise c -> Promise d` |
 | [`convergeP`](#convergep) | `(b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d` |
 | [`copyProp`](#copyprop) | `String -> String -> { k: v } -> { k: v }` |
 | [`copyPath`](#copypath) | `[String] -> [String] -> { k: v } -> { k: v }` |
@@ -196,13 +196,13 @@ const getSub =
 `@articulate/funky/lib/combine`
 
 ```haskell
-combine :: ({ k: v } -> { k: v }) -> { k: v }
+combine :: ({ k: v } -> { k: v }) -> { k: v } -> { k: v }
 ```
 
 Accepts a function & an object. Merges the results of the function into the object.
 
 ```js
-combine(always({ foo: 1 }), { foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
+combine(always({ foo: 1 }))({ foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
 ```
 
 ### combineAll
@@ -210,13 +210,13 @@ combine(always({ foo: 1 }), { foo: 2, bar: 3 }) //=> { foo: 1, baz: 3 }
 `@articulate/funky/lib/combineAll`
 
 ```haskell
-combineAll :: [a... -> { k: v }] -> { k: v } -> { k: v }
+combineAll :: [({ k: v }, ...) -> { k: v }] -> ({ k: v }, ...) -> { k: v }
 ```
 
 Accepts a list of functions & an object. Merges the results of all the functions into the object left-to-right
 
 ```js
-combineAll([ always({ foo: 1, bar: 2 }), always({ bar: 3 }) ], { foo: 4, baz: 5 }) //=> { foo: 1, bar: 3, baz: 5 }
+combineAll([ always({ foo: 1, bar: 2 }), always({ bar: 3 }) ])({ foo: 4, baz: 5 }) //=> { foo: 1, bar: 3, baz: 5 }
 ```
 
 ### combineAllP
@@ -233,7 +233,7 @@ Async version of [`combineAll`](#combineall)
 combineAllP([
   always(resolve({ foo: 1, bar: 2 })),
   always(resolve({ bar: 3 }))
-], { foo: 4, baz: 5 }) //=> Promise { foo: 1, baz: 5, bar: 3 }
+])({ foo: 4, baz: 5 }) //=> Promise { foo: 1, baz: 5, bar: 3 }
 ```
 
 ### combineP
@@ -241,7 +241,7 @@ combineAllP([
 `@articulate/funky/lib/combineP`
 
 ```haskell
-combineP :: ({ k: v } -> Promise { k: v }) -> Promise { k: v }
+combineP :: ({ k: v } -> Promise { k: v }) -> { k: v } -> Promise { k: v }
 ```
 
 Async version of [`combine`](#combine)
@@ -249,7 +249,7 @@ Async version of [`combine`](#combine)
 Accepts an async function & an object. Merges the results of the function into the object.
 
 ```js
-combineP(always(resolve({ foo: 1 })), { foo: 2, bar: 3 }) //=> Promise { foo: 1, baz: 3 }
+combineP(always(resolve({ foo: 1 })))({ foo: 2, bar: 3 }) //=> Promise { foo: 1, baz: 3 }
 ```
 
 ### combineWith
@@ -257,14 +257,14 @@ combineP(always(resolve({ foo: 1 })), { foo: 2, bar: 3 }) //=> Promise { foo: 1,
 `@articulate/funky/lib/combineWith`
 
 ```haskell
-combineWith :: (c -> b -> d) (a -> b) -> c -> d
+combineWith :: (c -> b -> d) -> (a -> b) -> c -> d
 ```
 
 Accepts a merging function, a transformation function, and an value. Uses the merging function to merge the results of the transformation function into the value.
 
 ```js
 combineWith(multiply, add(2), 3) //=> 15
-combineWith(mergeDeepLeft, always({ foo: { bar: 1, bip: 2 } }), { foo: { bar: 3, baz: 4 } })
+combineWith(mergeDeepLeft, always({ foo: { bar: 1, bip: 2 } }))({ foo: { bar: 3, baz: 4 } })
   //=> { foo: { bar: 3, baz: 4, bip: 2 } }
 ```
 
@@ -273,7 +273,7 @@ combineWith(mergeDeepLeft, always({ foo: { bar: 1, bip: 2 } }), { foo: { bar: 3,
 `@articulate/funky/lib/combineWithP`
 
 ```haskell
-combineWithP :: (c -> b -> d) (a -> Promise b) -> Promise c -> Promise d
+combineWithP :: (c -> b -> d) -> (a -> Promise b) -> Promise c -> Promise d
 ```
 
 Async version of [`combineWith`](#combinewith).
@@ -282,7 +282,7 @@ Accepts a merging function, an async transformation function, and an value. Uses
 
 ```js
 combineWith(multiply, compose(resolve, add(2)), 3) //=> Promise 15
-combineWith(mergeDeepLeft, always(resolve({ foo: { bar: 1, bip: 2 } })), { foo: { bar: 3, baz: 4 } })
+combineWith(mergeDeepLeft, always(resolve({ foo: { bar: 1, bip: 2 } })))({ foo: { bar: 3, baz: 4 } })
   //=> Promise { foo: { bar: 3, baz: 4, bip: 2 } }
 ```
 

@@ -6,20 +6,12 @@ const { combineWith } = require('..')
 
 describe('combineWith', () => {
   it('combines with the results of the function', () =>
-    expect(combineWith(multiply, add(2), 3)).to.eql(15)
+    expect(combineWith(multiply, add(2))(3)).to.eql(15)
   )
 
   describe('argument application', () => {
     it('apply fn(x)(x)(x)', () =>
       expect(combineWith(multiply)(add(2))(3)).to.eql(15)
-    )
-
-    it('apply fn(x, x)(x)', () =>
-      expect(combineWith(multiply, add(2))(3)).to.eql(15)
-    )
-
-    it('apply fn(x)(x, x)', () =>
-      expect(combineWith(multiply)(add(2), 3)).to.eql(15)
     )
   })
 })
