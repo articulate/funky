@@ -3,7 +3,10 @@
   "version": "2.0.0",
   "description": "Functional helper library",
   "main": "index.js",
-  "repository": "git@github.com:articulate/funky.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/articulate/funky"
+  },
   "author": "articulate",
   "license": "MIT",
   "nyc": {
@@ -16,15 +19,12 @@
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib && mkdir -p lib",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src test",
     "postversion": "git push --tags origin master",
     "prebuild": "yarn run clean",
     "pretest": "yarn run build",
     "preversion": "git checkout master && yarn run build",
-    "test": "mocha test --reporter=dot",
-    "test:ci": "yarn run lint && yarn run test:coverage && yarn run coverage",
-    "test:coverage": "nyc yarn run test"
+    "test": "mocha test --reporter=dot"
   },
   "dependencies": {
     "ramda": "^0.25.0"
@@ -33,7 +33,6 @@
     "@articulate/spy": "^0.0.1",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
-    "coveralls": "^2.13.1",
     "eslint": "^4.3.0",
     "joi": "^10.0",
     "mocha": "^3.5.0",
