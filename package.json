@@ -27,7 +27,7 @@
     "test": "mocha test --reporter=dot"
   },
   "dependencies": {
-    "ramda": "^0.25.0"
+    "ramda": "0.27.2"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
