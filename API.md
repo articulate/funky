@@ -294,7 +294,7 @@ combineWith(mergeDeepLeft, always(resolve({ foo: { bar: 1, bip: 2 } })))({ foo: 
 convergeP :: (b -> c -> Promise d) -> [(a -> Promise b), (a -> Promise c)] -> a -> Promise d
 ```
 
-An async version of [`R.converge`](http://devdocs.io/ramda/index#converge) that accepts Promise-returning branching and converging functions.
+An async version of [`R.converge`](https://ramdajs.com/docs/#converge) that accepts Promise-returning branching and converging functions.
 
 Accepts a converging function and a list of branching async functions and returns a new async function. When invoked, this new function is applied to some arguments, and each branching function is applied to those same arguments. The resolved values of each branching function are passed as arguments to the converging function to produce the resolved value.
 
@@ -348,7 +348,7 @@ copyProp('id', 'courseId', { id: 'abc' }) //=> { id: 'abc', courseId: 'abc' }
 evolveP :: { k: (v -> Promise v) } -> { k: v } -> Promise { k: v }
 ```
 
-An async version of [`R.evolve`](http://devdocs.io/ramda/index#evolve) that accepts Promise-returning transformation functions.
+An async version of [`R.evolve`](https://ramdajs.com/docs/#evolve) that accepts Promise-returning transformation functions.
 
 Creates a new object by recursively evolving a shallow copy of an object, according to the transformation functions. All non-primitive properties are copied by reference.  A transformation function will not be invoked if its corresponding key does not exist in the evolved object.
 
@@ -366,7 +366,7 @@ evolveP({ author: getProfile }, { author: 'abc' }) // Promise { author: { name: 
 juxtP :: [a... -> Promise b] -> a... -> Promise [b]
 ```
 
-An async version of [`R.juxt`](http://devdocs.io/ramda/index#juxt) that accepts Promise-returning branching functions.
+An async version of [`R.juxt`](https://ramdajs.com/docs/#juxt) that accepts Promise-returning branching functions.
 
 Applies a list of functions to some values, and resolves with a list of their resolved values.
 
@@ -384,7 +384,7 @@ const deleteCourseAndLessons = juxtP([ deleteCourse, deleteLessons ])
 mapP :: (a -> Promise b) -> [a] -> Promise [b]
 ```
 
-An async version of [`R.map`]() that accepts a Promise-returning function.
+An async version of [`R.map`](https://ramdajs.com/docs/#map) that accepts a Promise-returning function.
 
 Takes an async function and a list, applies the function to each of the list's values, and resolves with a list of the resolved values.
 
@@ -612,7 +612,7 @@ resolve('a') //=> Promise 'a'
 tapP :: (a -> Promise b) -> a -> Promise a
 ```
 
-An async version of [`R.tap`](http://devdocs.io/ramda/index#tap) that accepts a Promise-returning function.
+An async version of [`R.tap`](https://ramdajs.com/docs/#tap) that accepts a Promise-returning function.
 
 Runs the given function with the supplied value, and then resolves with that value.
 
@@ -628,7 +628,7 @@ tapP(a => Promise.resolve('b'), 'a') //=> Promise 'a'
 unlessP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
 ```
 
-An async version of [`R.unless`](http://devdocs.io/ramda/index#unless) that accepts Promise-returning functions.
+An async version of [`R.unless`](https://ramdajs.com/docs/#unless) that accepts Promise-returning functions.
 
 Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the original value.  If the predicate resolves falsy, it resolves with the result of calling the supplied function.
 
@@ -710,7 +710,7 @@ validateWith(Joi, schema, { id: 123 })   //=> Promise ValidationError
 whenP :: (a -> Promise Boolean) -> (a -> Promise a) -> a -> Promise a
 ```
 
-An async version of [`R.when`](http://devdocs.io/ramda/index#when) that accepts Promise-returning functions.
+An async version of [`R.when`](https://ramdajs.com/docs/#when) that accepts Promise-returning functions.
 
 Tests a value with an async predicate.  If the predicate resolves truthy, it resolves with the result of calling the supplied function.  If the predicate resolves falsy, it resolves with the original value.
 
