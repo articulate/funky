@@ -1,6 +1,6 @@
 {
   "name": "@articulate/funky",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Functional helper library",
   "main": "index.js",
   "repository": {
@@ -20,10 +20,9 @@
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib && mkdir -p lib",
     "lint": "eslint src test",
-    "postversion": "git push --tags origin master",
     "prebuild": "yarn run clean",
     "pretest": "yarn run build",
-    "preversion": "git checkout master && yarn run build",
+    "prepublish": "yarn run build",
     "test": "mocha test --reporter=dot"
   },
   "dependencies": {
