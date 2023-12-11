@@ -3,6 +3,7 @@
   "version": "1.9.1",
   "description": "Functional helper library",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": "git@github.com:articulate/funky.git",
   "author": "articulate",
   "license": "MIT",
@@ -22,9 +23,10 @@
     "prebuild": "yarn run clean",
     "pretest": "yarn run build",
     "preversion": "git checkout master && yarn run build",
-    "test": "mocha test --reporter=dot",
-    "test:ci": "yarn run lint && yarn run test:coverage && yarn run coverage",
-    "test:coverage": "nyc yarn run test"
+    "test": "mocha test --reporter=dot && yarn run tsd",
+    "test:ci": "yarn run lint && yarn run test:coverage && yarn run coverage && yarn run tsd",
+    "test:coverage": "nyc yarn run test",
+    "test:tsd": "tsd"
   },
   "dependencies": {
     "ramda": "^0.25.0"
@@ -39,7 +41,8 @@
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "prop-factory": "^1.0.0",
-    "proxyquire": "^2.0.1"
+    "proxyquire": "^2.0.1",
+    "tsd": "^0.29.0"
   },
   "peerDependencies": {
     "joi": ">=10"
