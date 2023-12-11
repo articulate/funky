@@ -23,7 +23,7 @@ const xfrms2 = {
     baz: (one: string, two: string, three: string) => [ one, two, three ].join('|'),
   },
   bat: 1
-}
+} as const
 
 type Expectation2 = {
   foo: string,

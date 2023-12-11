@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "ramda": "^0.25.0",
+    "ts-arithmetic": "^0.1.1",
     "ts-toolbelt": "^9.6.0",
     "type-fest": "^4.8.3"
   },
