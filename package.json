@@ -29,10 +29,13 @@
     "test:tsd": "tsd"
   },
   "dependencies": {
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "ts-toolbelt": "^9.6.0",
+    "type-fest": "^4.8.3"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
+    "@types/ramda": "~0.25.0",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
     "coveralls": "^2.13.1",
