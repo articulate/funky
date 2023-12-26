@@ -1,5 +1,7 @@
 import type { F } from 'ts-toolbelt'
 
+// https://stackoverflow.com/a/77715194/1590365
+
 type IntersectHead<T extends any[]> = (
   T extends [infer F, ...any]
     ? (x: F) => void
