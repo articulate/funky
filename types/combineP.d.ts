@@ -1,13 +1,13 @@
 import type { Combined } from './lib/combine'
 
-export default function combine<
+export default function combineP<
   T extends Record<PropertyKey, any>,
   U extends Record<PropertyKey, any>,
->(f: (a: T) => U, x: T): Combined<T, U>
+>(f: (a: T) => Promise<U> | U, x: T): Promise<Combined<T, U>>
 
-export default function combine<
+export default function combineP<
   T extends Record<PropertyKey, any>,
   U extends Record<PropertyKey, any>,
->(f: (a: T) => U): {
-  (x: T): Combined<T, U>
+>(f: (a: T) => Promise<U> | U): {
+  (x: T): Promise<Combined<T, U>>
 }
