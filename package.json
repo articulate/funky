@@ -30,9 +30,7 @@
   },
   "dependencies": {
     "ramda": "^0.25.0",
-    "ts-arithmetic": "^0.1.1",
-    "ts-toolbelt": "^9.6.0",
-    "type-fest": "^4.8.3"
+    "ts-toolbelt": "^9.6.0"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
@@ -46,6 +44,7 @@
     "nyc": "^11.1.0",
     "prop-factory": "^1.0.0",
     "proxyquire": "^2.0.1",
+    "ts-arithmetic": "^0.1.1",
     "tsd": "^0.29.0"
   },
   "peerDependencies": {
