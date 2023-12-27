@@ -20,7 +20,7 @@ export default function combineAll<
     f7: (x: TIn) => R7,
   ],
   x: TIn,
-): Combined<TIn, R1, R2, R3, R4, R5, R6, R7>
+): Combined<[ R1, R2, R3, R4, R5, R6, R7, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -42,7 +42,7 @@ export default function combineAll<
     f7: (x: TIn) => R7,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2, R3, R4, R5, R6, R7>
+  (x: TIn): Combined<[ R1, R2, R3, R4, R5, R6, R7, TIn ]>
 }
 
 export default function combineAll<
@@ -63,7 +63,7 @@ export default function combineAll<
     f6: (x: TIn) => R6,
   ],
   x: TIn,
-): Combined<TIn, R1, R2, R3, R4, R5, R6>
+): Combined<[ R1, R2, R3, R4, R5, R6, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -83,7 +83,7 @@ export default function combineAll<
     f6: (x: TIn) => R6,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2, R3, R4, R5, R6>
+  (x: TIn): Combined<[ R1, R2, R3, R4, R5, R6, TIn ]>
 }
 
 export default function combineAll<
@@ -102,7 +102,7 @@ export default function combineAll<
     f5: (x: TIn) => R5,
   ],
   x: TIn,
-): Combined<TIn, R1, R2, R3, R4, R5>
+): Combined<[ R1, R2, R3, R4, R5, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -120,7 +120,7 @@ export default function combineAll<
     f5: (x: TIn) => R5,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2, R3, R4, R5>
+  (x: TIn): Combined<[ R1, R2, R3, R4, R5, TIn ]>
 }
 
 export default function combineAll<
@@ -137,7 +137,7 @@ export default function combineAll<
     f4: (x: TIn) => R4,
   ],
   x: TIn,
-): Combined<TIn, R1, R2, R3, R4>
+): Combined<[ R1, R2, R3, R4, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -153,7 +153,7 @@ export default function combineAll<
     f4: (x: TIn) => R4,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2, R3, R4>
+  (x: TIn): Combined<[ R1, R2, R3, R4, TIn ]>
 }
 
 export default function combineAll<
@@ -168,7 +168,7 @@ export default function combineAll<
     f3: (x: TIn) => R3,
   ],
   x: TIn,
-): Combined<TIn, R1, R2, R3>
+): Combined<[ R1, R2, R3, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -182,7 +182,7 @@ export default function combineAll<
     f3: (x: TIn) => R3,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2, R3>
+  (x: TIn): Combined<[ R1, R2, R3, TIn ]>
 }
 
 export default function combineAll<
@@ -195,7 +195,7 @@ export default function combineAll<
     f2: (x: TIn) => R2,
   ],
   x: TIn,
-): Combined<TIn, R1, R2>
+): Combined<[ R1, R2, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -207,7 +207,7 @@ export default function combineAll<
     f2: (x: TIn) => R2,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1, R2>
+  (x: TIn): Combined<[ R1, R2, TIn ]>
 }
 
 export default function combineAll<
@@ -218,7 +218,7 @@ export default function combineAll<
     f1: (x: TIn) => R1,
   ],
   x: TIn,
-): Combined<TIn, R1>
+): Combined<[ R1, TIn ]>
 
 export default function combineAll<
   TIn extends Record<PropertyKey, any>,
@@ -228,7 +228,7 @@ export default function combineAll<
     f1: (x: TIn) => R1,
   ],
 ): { 
-  (x: TIn): Combined<TIn, R1>
+  (x: TIn): Combined<[ R1, TIn ]>
 }
 
 

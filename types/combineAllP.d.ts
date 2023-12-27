@@ -20,7 +20,7 @@ export default function combineAllP<
     f7: (x: TIn) => Promise<R7> | R7,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2, R3, R4, R5, R6, R7>>
+): Promise<Combined<[ R1, R2, R3, R4, R5, R6, R7, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -42,7 +42,7 @@ export default function combineAllP<
     f7: (x: TIn) => Promise<R7> | R7,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2, R3, R4, R5, R6, R7>>
+  (x: TIn): Promise<Combined<[ R1, R2, R3, R4, R5, R6, R7, TIn ]>>
 }
 
 export default function combineAllP<
@@ -63,7 +63,7 @@ export default function combineAllP<
     f6: (x: TIn) => Promise<R6> | R6,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2, R3, R4, R5, R6>>
+): Promise<Combined<[ R1, R2, R3, R4, R5, R6, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -83,7 +83,7 @@ export default function combineAllP<
     f6: (x: TIn) => Promise<R6> | R6,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2, R3, R4, R5, R6>>
+  (x: TIn): Promise<Combined<[ R1, R2, R3, R4, R5, R6, TIn ]>>
 }
 
 export default function combineAllP<
@@ -102,7 +102,7 @@ export default function combineAllP<
     f5: (x: TIn) => Promise<R5> | R5,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2, R3, R4, R5>>
+): Promise<Combined<[ R1, R2, R3, R4, R5, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -120,7 +120,7 @@ export default function combineAllP<
     f5: (x: TIn) => Promise<R5> | R5,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2, R3, R4, R5>>
+  (x: TIn): Promise<Combined<[ R1, R2, R3, R4, R5, TIn ]>>
 }
 
 export default function combineAllP<
@@ -137,7 +137,7 @@ export default function combineAllP<
     f4: (x: TIn) => Promise<R4> | R4,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2, R3, R4>>
+): Promise<Combined<[ R1, R2, R3, R4, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -153,7 +153,7 @@ export default function combineAllP<
     f4: (x: TIn) => Promise<R4> | R4,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2, R3, R4>>
+  (x: TIn): Promise<Combined<[ R1, R2, R3, R4, TIn ]>>
 }
 
 export default function combineAllP<
@@ -168,7 +168,7 @@ export default function combineAllP<
     f3: (x: TIn) => Promise<R3> | R3,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2, R3>>
+): Promise<Combined<[ R1, R2, R3, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -182,7 +182,7 @@ export default function combineAllP<
     f3: (x: TIn) => Promise<R3> | R3,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2, R3>>
+  (x: TIn): Promise<Combined<[ R1, R2, R3, TIn ]>>
 }
 
 export default function combineAllP<
@@ -195,7 +195,7 @@ export default function combineAllP<
     f2: (x: TIn) => Promise<R2> | R2,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1, R2>>
+): Promise<Combined<[ R1, R2, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -207,7 +207,7 @@ export default function combineAllP<
     f2: (x: TIn) => Promise<R2> | R2,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1, R2>>
+  (x: TIn): Promise<Combined<[ R1, R2, TIn ]>>
 }
 
 export default function combineAllP<
@@ -218,7 +218,7 @@ export default function combineAllP<
     f1: (x: TIn) => Promise<R1> | R1,
   ],
   x: TIn,
-): Promise<Combined<TIn, R1>>
+): Promise<Combined<[ R1, TIn ]>>
 
 export default function combineAllP<
   TIn extends Record<PropertyKey, any>,
@@ -228,7 +228,7 @@ export default function combineAllP<
     f1: (x: TIn) => Promise<R1> | R1,
   ],
 ): { 
-  (x: TIn): Promise<Combined<TIn, R1>>
+  (x: TIn): Promise<Combined<[ R1, TIn ]>>
 }
 
 
