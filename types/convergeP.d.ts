@@ -1,31 +1,35 @@
+import { ZipArgs } from './lib/arguments'
+
 type ConvergingFunctions<
-  TIn extends any[],
   TConverging extends readonly any[],
-  A extends ReadonlyArray<(...args: TIn) => any> = [],
+  A extends ReadonlyArray<(...args: any[]) => any> = []
 > = TConverging extends []
   ? A
-  : TConverging extends [infer H, ...(infer R)]
-    ? ConvergingFunctions<TIn, R, [ ...A, (...args: TIn) => Promise<H> | H ]>
+  : TConverging extends [ infer H, ...(infer R) ]
+    ? ConvergingFunctions<R, [ ...A, (...args: any[]) => Promise<H> | H ]>
     : never
+
+type ConvergingArgs<
+  TConverging extends readonly any[],
+  TFns extends ConvergingFunctions<TConverging>,
+> = ZipArgs<Parameters<TFns[number]>>
 
 export default function convergeP<
   TConverging extends readonly any[],
   TOut,
-  TIn extends any[],
+  TFns extends ConvergingFunctions<TConverging>,
 >(
   after: (...args: TConverging) => Promise<TOut> | TOut,
-  fs: ConvergingFunctions<TIn, TConverging>,
+  fs: TFns,
 ): {
-  (...args: TIn): Promise<TOut>
+  (...args: ConvergingArgs<TConverging, TFns>): Promise<TOut>
 }
 
 export default function convergeP<
   TConverging extends readonly any[],
   TOut,
->(
-  after: (...args: TConverging) => Promise<TOut> | TOut,
-): {
-  <TIn extends any[]>(fs: ConvergingFunctions<TIn, TConverging>): {
-    (...args: TIn): Promise<TOut>
+>(after: (...args: TConverging) => Promise<TOut> | TOut): {
+  <TFns extends ConvergingFunctions<TConverging>>(fns: TFns): {
+    (...args: ConvergingArgs<TConverging, TFns>): Promise<TOut>
   }
 }
