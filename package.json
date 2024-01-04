@@ -31,7 +31,7 @@
   "dependencies": {
     "ramda": "^0.25.0",
     "ts-toolbelt": "^9.6.0",
-    "type-fest": "^4.8.3"
+    "type-fest": "^4.9.0"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
