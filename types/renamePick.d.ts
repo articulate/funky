@@ -2,13 +2,13 @@ import { Simplify } from 'type-fest'
 
 import { RenameMap, RenamedKey } from './lib/rename'
 
-type RenameAll<
+type RenamePick<
   TRenameMap extends RenameMap,
   TVal extends Record<PropertyKey, any>,
 > = Simplify<{
-  [K in keyof TVal as RenamedKey<K, TRenameMap>]: K extends keyof TRenameMap
+  [K in Extract<keyof TRenameMap, keyof TVal> as RenamedKey<K, TRenameMap>]: K extends keyof TRenameMap
     ? TRenameMap[K] extends RenameMap
-      ? RenameAll<TRenameMap[K], TVal[K]>
+      ? RenamePick<TRenameMap[K], TVal[K]>
       : TRenameMap[K] extends PropertyKey
         ? TVal[K]
         : never
@@ -16,13 +16,13 @@ type RenameAll<
 }>
 
 
-export default function renameAll<
+export default function renamePick<
   const TRenameMap extends RenameMap,
   TVal extends Record<PropertyKey, any>,
->(renames: TRenameMap, obj: TVal): RenameAll<TRenameMap, TVal>
+>(renames: TRenameMap, obj: TVal): RenamePick<TRenameMap, TVal>
 
-export default function renameAll<
+export default function renamePick<
   const TRenameMap extends RenameMap,
 >(renames: TRenameMap): {
-  <TVal extends Record<PropertyKey, any>>(val: TVal): RenameAll<TRenameMap, TVal>
+  <TVal extends Record<PropertyKey, any>>(val: TVal): RenamePick<TRenameMap, TVal>
 }
