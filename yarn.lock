@@ -80,6 +80,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
+"@types/hapi__joi@^17.1.14":
+  version "17.1.14"
+  resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.14.tgz#937843b8a5d49fbfa8a87cc3527f6575e2140ca8"
+  integrity sha512-elV1VhwXUfA1sw59ij75HWyCH+3cA7xLbaOY9GQ+iQo/S+jSSf22LNZAmsXMdfV8DZwquCZaCT+F43Xf6/txrQ==
+
 "@types/json-schema@*":
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
@@ -1407,9 +1412,9 @@ hoek@2.x.x:
   integrity sha1-ILt0A9POo5jpHcRxCo/xuCdKJe0=
 
 hoek@4.x.x:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
-  integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.3.1.tgz#1d2ea831857e4ecdce7fd5ffe07acdf8eb368cca"
+  integrity sha512-v7E+yIjcHECn973i0xHm4kJkEpv3C8sbYS4344WXbzYqRyiDD7rjnnKo4hsJkejQBAFdRMUGNHySeSPKSH9Rqw==
 
 hosted-git-info@^2.1.4:
   version "2.5.0"
@@ -1709,7 +1714,7 @@ isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
 isemail@2.x.x:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isemail/-/isemail-2.2.1.tgz#0353d3d9a62951080c262c2aa0a42b8ea8e9e2a6"
-  integrity sha1-A1PT2aYpUQgMJiwqoKQrjqjp4qY=
+  integrity sha512-LPjFxaTatluwGAJlGe4FtRdzg0a9KlXrahHoHAR4HwRNf90Ttwi6sOQ9zj+EoCPmk9yyK+WFUqkm0imUo8UJbw==
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -1782,9 +1787,9 @@ istanbul-reports@^1.1.1:
     handlebars "^4.0.3"
 
 items@2.x.x:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/items/-/items-2.1.1.tgz#8bd16d9c83b19529de5aea321acaada78364a198"
-  integrity sha1-i9FtnIOxlSneWuoyGsqtp4NkoZg=
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/items/-/items-2.2.1.tgz#7b7122c551a95dfba8c542743d50765a96071c80"
+  integrity sha512-4nzts/gjePMkwiCuw0GzvJNNvbsfDsgZNC+AFNu4llNZmh49MSTaMR7PMIbEnGo9zRQFAcjrgrsU3F0hI3UJyA==
 
 jest-diff@^29.0.3:
   version "29.7.0"
@@ -3244,9 +3249,9 @@ to-regex-range@^5.0.1:
     is-number "^7.0.0"
 
 topo@2.x.x:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
-  integrity sha1-zVYVdSU5BXwNwEkaYhw7xvvh0YI=
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/topo/-/topo-2.1.1.tgz#d117450d1875f49056fb763a1adfde03c77b67a6"
+  integrity sha512-ZPrPP5nwzZy1fw9abHQH2k+YarTgp9UMAztcB3MmlcZSif63Eg+az05p6wTDaZmnqpS3Mk7K+2W60iHarlz8Ug==
   dependencies:
     hoek "4.x.x"
 

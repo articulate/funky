@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
+    "@types/hapi__joi": "^17.1.14",
     "@types/ramda": "~0.25.0",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
@@ -49,6 +50,7 @@
     "tsd": "^0.29.0"
   },
   "peerDependencies": {
+    "@types/hapi__joi": ">=10",
     "joi": ">=10"
   }
 }
