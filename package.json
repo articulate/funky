@@ -4,6 +4,16 @@
   "description": "Functional helper library",
   "main": "index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./src/*": {
+      "require": "./src/*.js",
+      "types": "./types/*.d.ts"
+    }
+  },
   "repository": "git@github.com:articulate/funky.git",
   "author": "articulate",
   "license": "MIT",
