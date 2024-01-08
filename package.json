@@ -7,154 +7,192 @@
   "exports": {
     ".": {
       "require": "./index.js",
+      "browser": "./index.js",
       "types": "./index.d.ts"
     },
     "./lib/all": {
       "require": "./lib/all.js",
+      "browser": "./lib/all.js",
       "types": "./types/all.d.ts"
     },
     "./lib/assemble": {
       "require": "./lib/assemble.js",
+      "browser": "./lib/assemble.js",
       "types": "./types/assemble.d.ts"
     },
     "./lib/assembleP": {
       "require": "./lib/assembleP.js",
+      "browser": "./lib/assembleP.js",
       "types": "./types/assembleP.d.ts"
     },
     "./lib/assocWith": {
       "require": "./lib/assocWith.js",
+      "browser": "./lib/assocWith.js",
       "types": "./types/assocWith.d.ts"
     },
     "./lib/assocWithP": {
       "require": "./lib/assocWithP.js",
+      "browser": "./lib/assocWithP.js",
       "types": "./types/assocWithP.d.ts"
     },
     "./lib/backoff": {
       "require": "./lib/backoff.js",
+      "browser": "./lib/backoff.js",
       "types": "./types/backoff.d.ts"
     },
     "./lib/batch": {
       "require": "./lib/batch.js",
+      "browser": "./lib/batch.js",
       "types": "./types/batch.d.ts"
     },
     "./lib/combine": {
       "require": "./lib/combine.js",
+      "browser": "./lib/combine.js",
       "types": "./types/combine.d.ts"
     },
     "./lib/combineAll": {
       "require": "./lib/combineAll.js",
+      "browser": "./lib/combineAll.js",
       "types": "./types/combineAll.d.ts"
     },
     "./lib/combineAllP": {
       "require": "./lib/combineAllP.js",
+      "browser": "./lib/combineAllP.js",
       "types": "./types/combineAllP.d.ts"
     },
     "./lib/combineP": {
       "require": "./lib/combineP.js",
+      "browser": "./lib/combineP.js",
       "types": "./types/combineP.d.ts"
     },
     "./lib/combineWith": {
       "require": "./lib/combineWith.js",
+      "browser": "./lib/combineWith.js",
       "types": "./types/combineWith.d.ts"
     },
     "./lib/combineWithP": {
       "require": "./lib/combineWithP.js",
+      "browser": "./lib/combineWithP.js",
       "types": "./types/combineWithP.d.ts"
     },
     "./lib/convergeP": {
       "require": "./lib/convergeP.js",
+      "browser": "./lib/convergeP.js",
       "types": "./types/convergeP.d.ts"
     },
     "./lib/copyPath": {
       "require": "./lib/copyPath.js",
+      "browser": "./lib/copyPath.js",
       "types": "./types/copyPath.d.ts"
     },
     "./lib/copyProp": {
       "require": "./lib/copyProp.js",
+      "browser": "./lib/copyProp.js",
       "types": "./types/copyProp.d.ts"
     },
     "./lib/evolveP": {
       "require": "./lib/evolveP.js",
+      "browser": "./lib/evolveP.js",
       "types": "./types/evolveP.d.ts"
     },
     "./lib/juxtP": {
       "require": "./lib/juxtP.js",
+      "browser": "./lib/juxtP.js",
       "types": "./types/juxtP.d.ts"
     },
     "./lib/mapP": {
       "require": "./lib/mapP.js",
+      "browser": "./lib/mapP.js",
       "types": "./types/mapP.d.ts"
     },
     "./lib/move": {
       "require": "./lib/move.js",
+      "browser": "./lib/move.js",
       "types": "./types/move.d.ts"
     },
     "./lib/normalizeBy": {
       "require": "./lib/normalizeBy.js",
+      "browser": "./lib/normalizeBy.js",
       "types": "./types/normalizeBy.d.ts"
     },
     "./lib/onSuccess": {
       "require": "./lib/onSuccess.js",
+      "browser": "./lib/onSuccess.js",
       "types": "./types/onSuccess.d.ts"
     },
     "./lib/onSuccessP": {
       "require": "./lib/onSuccessP.js",
+      "browser": "./lib/onSuccessP.js",
       "types": "./types/onSuccessP.d.ts"
     },
     "./lib/overP": {
       "require": "./lib/overP.js",
+      "browser": "./lib/overP.js",
       "types": "./types/overP.d.ts"
     },
     "./lib/promisify": {
       "require": "./lib/promisify.js",
+      "browser": "./lib/promisify.js",
       "types": "./types/promisify.d.ts"
     },
     "./lib/reject": {
       "require": "./lib/reject.js",
+      "browser": "./lib/reject.js",
       "types": "./types/reject.d.ts"
     },
     "./lib/rename": {
       "require": "./lib/rename.js",
+      "browser": "./lib/rename.js",
       "types": "./types/rename.d.ts"
     },
     "./lib/renameAll": {
       "require": "./lib/renameAll.js",
+      "browser": "./lib/renameAll.js",
       "types": "./types/renameAll.d.ts"
     },
     "./lib/renamePath": {
       "require": "./lib/renamePath.js",
+      "browser": "./lib/renamePath.js",
       "types": "./types/renamePath.d.ts"
     },
     "./lib/renamePick": {
       "require": "./lib/renamePick.js",
+      "browser": "./lib/renamePick.js",
       "types": "./types/renamePick.d.ts"
     },
     "./lib/resolve": {
       "require": "./lib/resolve.js",
+      "browser": "./lib/resolve.js",
       "types": "./types/resolve.d.ts"
     },
     "./lib/tapP": {
       "require": "./lib/tapP.js",
+      "browser": "./lib/tapP.js",
       "types": "./types/tapP.d.ts"
     },
     "./lib/unlessP": {
       "require": "./lib/unlessP.js",
+      "browser": "./lib/unlessP.js",
       "types": "./types/unlessP.d.ts"
     },
     "./lib/useWithP": {
       "require": "./lib/useWithP.js",
+      "browser": "./lib/useWithP.js",
       "types": "./types/useWithP.d.ts"
     },
     "./lib/validate": {
       "require": "./lib/validate.js",
+      "browser": "./lib/validate.js",
       "types": "./types/validate.d.ts"
     },
     "./lib/validateWith": {
       "require": "./lib/validateWith.js",
+      "browser": "./lib/validateWith.js",
       "types": "./types/validateWith.d.ts"
     },
     "./lib/whenP": {
       "require": "./lib/whenP.js",
+      "browser": "./lib/whenP.js",
       "types": "./types/whenP.d.ts"
     }
   },
