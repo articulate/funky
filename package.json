@@ -9,8 +9,8 @@
       "require": "./index.js",
       "types": "./index.d.ts"
     },
-    "./src/*": {
-      "require": "./src/*.js",
+    "./lib/*": {
+      "require": "./lib/*.js",
       "types": "./types/*.d.ts"
     }
   },
