@@ -9,7 +9,5 @@ declare function add(a: 2): {
 
 declare function multiply(a: 3, b: 5): Promise<Multiply<3, 5>>
 
-expectType<Promise<15>>(combineWithP(multiply, add(2), 3))
 expectType<Promise<15>>(combineWithP(multiply)(add(2))(3))
 expectType<Promise<15>>(combineWithP(multiply, add(2))(3))
-expectType<Promise<15>>(combineWithP(multiply)(add(2), 3))

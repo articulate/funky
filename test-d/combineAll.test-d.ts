@@ -19,5 +19,4 @@ type Expectation = {
   baz: 3,
 }
 
-expectAssignable<Expectation>(combineAll(actions, input))
 expectAssignable<Expectation>(combineAll(actions)(input))

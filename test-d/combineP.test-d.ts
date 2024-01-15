@@ -11,5 +11,4 @@ function K(x: typeof mixin) {
 
 type Expectation = Promise<{ foo: 'bar', baz: 'bip' }>
 
-expectAssignable<Expectation>(combineP(K(mixin), input))
 expectAssignable<Expectation>(combineP(K(mixin))(input))

@@ -7,7 +7,9 @@ const orig = {
   name: 'bird' as const,
   sounds: {
     call: 'chirp' as const
-  }
+  },
+  title: 'My title' as const,
+  latestTitle: 'haha (business)' as const,
 }
 
 const renames = {
@@ -15,7 +17,9 @@ const renames = {
   count: 'number',
   sounds: {
     call: 'say'
-  }
+  },
+  latestTitle: 'title',
+  title: 'updatedTitle',
 } as const
 
 type Expectation = {
@@ -23,7 +27,9 @@ type Expectation = {
   name: 'bird',
   sounds: {
     say: 'chirp'
-  }
+  },
+  title: 'haha (business)',
+  updatedTitle: 'My title',
 }
 
 expectType<Expectation>(renameAll(renames, orig))
