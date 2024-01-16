@@ -1,0 +1,38 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node:
+          - 18.x
+          - 20.x
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn run lint
+      - name: yarn run test
+        run: npx nyc --reporter=lcov yarn run test
+      - uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949 # pin@v2
+        with:
+          flag-name: run-${{ matrix.node }}
+          parallel: true
+  coverage:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: coverallsapp/github-action@3dfc5567390f6fa9267c0ee9c251e4c8c3f18949 # pin@v2
+        with:
+          parallel-finished: true
