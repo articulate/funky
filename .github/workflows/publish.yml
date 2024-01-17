@@ -34,6 +34,6 @@ jobs:
           scope: '@articulate'
           cache: yarn
       - run: yarn install --frozen-lockfile
-      - run: yarn publish
+      - run: yarn publish --tag legacy
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

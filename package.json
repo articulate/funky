@@ -1,6 +1,6 @@
 {
   "name": "@articulate/funky",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "Functional helper library",
   "main": "index.js",
   "types": "index.d.ts",
@@ -31,8 +31,8 @@
     "clean": "rm -rf lib && mkdir -p lib",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src test",
-    "postversion": "git push --tags origin master",
     "prebuild": "yarn run clean",
+    "prepublish": "yarn run build",
     "pretest": "yarn run build",
     "preversion": "git checkout master && yarn run build",
     "test": "mocha test --reporter=dot && yarn run test:tsd",
