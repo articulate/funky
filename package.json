@@ -1,8 +1,21 @@
 {
   "name": "@articulate/funky",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Functional helper library",
   "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "browser": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./lib/*": {
+      "require": "./lib/*.js",
+      "browser": "./lib/*.js",
+      "types": "./types/*.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/articulate/funky"
@@ -21,15 +34,23 @@
     "clean": "rm -rf lib && mkdir -p lib",
     "lint": "eslint src test",
     "prebuild": "yarn run clean",
-    "pretest": "yarn run build",
     "prepublish": "yarn run build",
-    "test": "mocha test --reporter=dot"
+    "pretest": "yarn run build",
+    "preversion": "git checkout master && yarn run build",
+    "test": "mocha test --reporter=dot && yarn run test:tsd",
+    "test:ci": "yarn run lint && yarn run test:coverage && yarn run coverage && yarn run test:tsd",
+    "test:coverage": "nyc yarn run test",
+    "test:tsd": "tsd"
   },
   "dependencies": {
-    "ramda": "0.27.2"
+    "ramda": "0.27.2",
+    "ts-toolbelt": "^9.6.0",
+    "type-fest": "^4.9.0"
   },
   "devDependencies": {
     "@articulate/spy": "^0.0.1",
+    "@types/hapi__joi": "^17.1.14",
+    "@types/ramda": "~0.27.0",
     "buble": "^0.15.2",
     "chai": "^4.1.1",
     "eslint": "^4.3.0",
@@ -37,9 +58,12 @@
     "mocha": "^3.5.0",
     "nyc": "^11.1.0",
     "prop-factory": "^1.0.0",
-    "proxyquire": "^2.0.1"
+    "proxyquire": "^2.0.1",
+    "ts-arithmetic": "^0.1.1",
+    "tsd": "^0.29.0"
   },
   "peerDependencies": {
+    "@types/hapi__joi": ">=10",
     "joi": ">=10"
   }
 }

@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "ts-toolbelt": ["./node_modules/ts-toolbelt"]
+    }
+  }
+}
